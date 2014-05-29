@@ -1,0 +1,106 @@
+<div class="portlet subscription-portlet">
+    <tal:isauthed tal:condition="not:context/plone_portal_state/anonymous">
+    <div tal:condition="not:context/is_user_subscribed"><a class="portlet-button btn" href="?subscribe=true">Subscribe!<i class='arrow-icon right-dark-grey pull-right'></a></div>
+    <div tal:condition="context/is_user_subscribed"><a class="portlet-button btn" href="?subscribe=false">Unsubscribe?<i class='arrow-icon right-dark-grey pull-right'></a></div>
+    </tal:isauthed>
+    <tal:isnotauthed tal:condition="context/plone_portal_state/anonymous">
+        <div>
+            <a class="btn portlet-button" href="#subscribe-form" role="button" data-toggle="modal">Subscribe!<i class="arrow-icon right-dark-grey"></i></a>
+            <div class="modal" id="subscribe-form" role="dialog" style="display: none;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Subscribe to Campaign updates</h3>
+                </div>
+                <form novalidate="novalidate">
+                    <div class="modal-body">
+                        <div id="subscription-name" class="row-fluid">
+                            <div class="span6 control-group required">
+                                <input type="text" name="firstname" class="required" placeholder="First Name" />
+                            </div>
+                            <div class="span6 control-group required">
+                                <input type="text" name="lastname" class="required" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div id="subscription-contact" class="row-fluid">
+                            <div class="span6 control-group required">
+                                <input type="text" name="email" class="required email" placeholder="Email" />
+                            </div>
+                            <div class="span6 control-group">
+                                <input type="text" name="mobile" class="digits" placeholder="Mobile (Optional)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+            <script type="text/javascript">
+                function isValidEmailAddress(emailAddress) {
+                    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+                    return pattern.test(emailAddress);
+                };
+                
+                jQuery( function ( $ ) {
+                    $( '#subscribe-form' ).modal( {
+                        show: false
+                    } );
+                    
+                    $( '#subscribe-form form' ).submit( function ( e ) {
+                        e.preventDefault();
+                        /* Clear any previous submit errors */
+                        $( '#subscribe-form .label-important' ).remove();
+
+                        /* Validation */
+                        var valid = true;
+                        /* Clear any previous validation errors */
+                        $( '#subscribe-form form .error .help-inline' ).remove();
+                        $( '#subscribe-form form .error' ).removeClass( 'error' );
+                        /* Make sure all required fields are set, mark them if they are not */
+                        $( '#subscribe-form form .required input' ).each( function () {
+                            if ( ! $( this ).val() )
+                            {
+                                valid = false;
+                                $( this ).attr( 'placeholder', $( this ).attr('placeholder')+' is Required!' );
+                                $( this ).parent().addClass( 'error' );
+                            } else if ( $( this ).hasClass( 'email' ) && ! isValidEmailAddress( $( this ) ) ) {
+                                valid = false;
+                                $( this ).attr( 'placeholder', $( this ).val()+' is not a valid email!' );
+                                $( this ).parent().addClass( 'error' );
+                                $( this ).val('');
+                            }
+                        } );
+                        
+                        var mobile = $( '#subscribe-form form input.digits' );
+                        console.log(mobile.val());
+                        if ( mobile.val() && ! $.isNumeric( mobile.val() ) ) {
+                            valid = false;
+                            mobile.attr( 'placeholder', 'Mobile can only have digits!' );
+                            mobile.parent().addClass( 'error' );
+                            mobile.val('');
+                        }
+
+                        if ( valid )
+                        {
+                            $.ajax( {
+                                url: '?subscribe=true',
+                                type: 'POST',
+                                data: $( '#subscribe-form form' ).serialize(),
+                                success: function ( data ) {
+                                    // Clear the form
+                                    $( '#subscribe-form form input' ).each( function () { $( this ).val( '' ) } );
+                                    $( '#subscribe-form' ).modal( 'hide' );
+                                },
+                                error: function () {
+                                    $( '#subscribe-form .modal-footer' ).prepend( '<span class="label label-important">Was unable to submit form. Please try again later.</span>' );
+                                }
+                            } );
+                        } else {
+                            $( '#subscription-name' ).before('<div id="subscription-update-error" class="alert"><strong>Fields Required</strong>Please fill in the indicated fields.</div>');
+                        }
+                    } );
+                } );
+            </script>
+        </div>
+    </tal:isnotauthed>
+</div>

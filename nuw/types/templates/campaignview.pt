@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+        <div class="campaign detail">
+            <div class="image">
+                <img tal:define="scale context/@@images; thumb python: scale.scale('image', width=599, direction='down')"
+                     tal:condition="context/image"
+                     tal:replace="structure thumb/tag|nothing" />
+            </div>
+            <h1 class="documentFirstHeading" tal:content="context/Title"></h1>
+            <div tal:content="structure context/body/output" tal:condition="context/body" />
+            <div class="campaign-news" tal:condition="view/news_items">
+                <h2>Campaign Updates</h2>
+                <div class="news-item" tal:repeat="item view/news_items">
+                    <div class="news-title" tal:content="python:item.effective.strftime( '%A %d %B - ' ) + item.Title"></div>
+                    <p class="news-desc" tal:content="item/Description"></p>
+                    <div tal:define="obj item/getObject" class="news-body">
+                        <div class="newsImageContainer"
+                             tal:condition="obj/getImage|nothing">
+                            <a href="#"
+                               tal:define="here_url obj/@@plone_context_state/object_url;"
+                               tal:attributes="href string:$here_url/image/image_view_fullscreen"
+                               id="parent-fieldname-image">
+                               <img tal:replace="structure python: obj.tag(scale='mini', css_class='newsImage')" src="" alt="" />
+                            </a>
+                            <p class="discreet" tal:condition="obj/imageCaption|nothing">
+                              <metal:field use-macro="python:obj.widget('imageCaption', mode='view')">
+                              Image Caption
+                              </metal:field>
+                            </p>
+                        </div>
+                        <div metal:define-macro="text-field-view"
+                             id="parent-fieldname-text" class="stx"
+                             tal:define="text text|obj/getText|nothing"
+                             tal:condition="text">
+                            <div metal:define-slot="inside" tal:replace="structure text">The body</div>
+                        </div>
+                        <div class="visualClear"></div>
+                    </div>
+                    <button class="read-more btn" tal:attributes="href item/getURL">Read more…</button>
+                </div>
+                <script type="text/javascript">
+                    jQuery( function ( $ ) {
+                        $( '.read-more' ).toggle( function ( e ) {
+                            e.preventDefault();
+                            $( this ).text( 'Read less…' ).parent().find( '.news-body' ).slideDown( 'fast' );
+                        }, function ( e ) {
+                            e.preventDefault();
+                            $( this ).text( 'Read more…' ).parent().find( '.news-body' ).slideUp( 'fast' );
+                        } );
+                        $( '.news-item' ).click( function () {
+                            $( this ).find( '.read-more' ).click();
+                        } );
+                    } );
+                </script>
+            </div>
+            <tal:haswall tal:condition="exists:context/wall">
+                <div class="campaign-wall">
+                    <h2>Leave a Comment</h2>
+                    <div tal:content="structure view/wall/inlineview" tal:condition="view/canaccesswall" />
+                    <div tal:condition="not:view/canaccesswall"><p>Follow the members discussion by <a tal:attributes="href string:${context/portal_url}/login">Logging in</a></p></div>
+                </div>
+            </tal:haswall>
+        </div>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

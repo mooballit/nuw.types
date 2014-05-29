@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- This will cause a database constraint error for the second line.
+     -->
+<message systemid="nuwdb" userid="dbo" action="update" entity="person">
+  <data>
+<person personid="40a72520-ace8-e011-90f7-005056a20027" activity="supportive" cantranslate="No" dob="1955-05-16T00:00:00" employeeid="1930" fax="" firstname="Trevor" gender="Male" home="" homeaddress1="" homepostcode="0" homestate="" homesuburb="" lastname="Kirk" mobile="" postrts="True" preferredname="Trevor" status="Purged" title="Mr" type="Ex-Member" webstatus="ex-member" work="" />
+<person personid="40942A20-ACE8-E011-90F7-005056A20027" activity="supportive" cantranslate="No" employeeid="&#xD;&#xA;M2514" fax="" firstname="J" gender="Unknown" home="" lastname="Tuilua" mobile="" postrts="True" preferredname="J" status="Rule59 Resigned" type="Ex-Member" webstatus="ex-member" work="" />
+<person personid="40942A20-ACE8-E011-90F7-005056A20027" activity="supportive" cantranslate="No" dob="1988-08-04T00:00:00" employeeid="2074" fax="" firstname="Ken" gender="Male" home="07 3252 1192" homeaddress1="23/16 Martin Street" homepostcode="4006" homestate="QLD" homesuburb="FORTITUDE VALLEY" lastname="Lowe" mobile="" postaddress1="23/16 Martin Street" postpcode="4006" postrts="True" poststate="QLD" postsuburb="FORTITUDE VALLEY" preferredname="Ken" status="Purged" title="Mr" type="Ex-Member" webstatus="ex-member" work="" />
+  </data>
+</message>
+

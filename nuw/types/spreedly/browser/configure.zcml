@@ -1,0 +1,42 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="plone">
+
+  <include package=".components" />
+  
+  <browser:view
+      for="..interfaces.ISpreedlyPayment"
+      class=".overview.SpreedlyOverview"
+      name="overview"
+      permission="pcommerce.CheckOut"
+      provides="pcommerce.core.interfaces.IPaymentView"
+      />
+
+  <browser:view
+      for="..interfaces.ISpreedlyPayment"
+      class=".payment.SpreedlyPayment"
+      name="payment"
+      permission="pcommerce.CheckOut"
+      provides="pcommerce.core.interfaces.IPaymentView"
+      />
+
+  <browser:view
+      for="..interfaces.ISpreedlyPayment"
+      class=".confirmation.SpreedlyConfirmation"
+      name="confirmation"
+      permission="pcommerce.CheckOut"
+      provides="pcommerce.core.interfaces.IPaymentView"
+      />
+
+  <browser:resource
+      name="pcommerce_payment_spreedly_icon.gif"
+      image="icon.gif"
+      />
+
+  <browser:resource
+      name="pcommerce_payment_spreedly_logo.gif"
+      image="logo.gif"
+      />
+
+</configure>

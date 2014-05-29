@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="supergroup">
+  <data>
+    <supergroup nuwassistid="273866" nuwdbid="NC00111" supergroupid="8887FEC5-EE00-E111-A628-005056A20027" name="The Logistic Services Group" type="Ownership Group"/>
+    <supergroup nuwassistid="275003" nuwdbid="industry187" supergroupid="0C2FC41E-BDF2-E011-90F7-005056A20027" name="Sales &amp; Marketing - Eleanor Masters &amp; Kiri Reidy" type="Industry Group"/>
+  </data>
+</message>

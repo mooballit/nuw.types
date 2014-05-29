@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object name="EmailUpdate" meta_type="Filesystem Directory View" directory="nuw.types.EmailUpdateTool:skins/EmailUpdate"/>
+  <skin-path name="*">
+    <layer name="EmailUpdate" insert-after="custom"/>
+  </skin-path>
+</object>

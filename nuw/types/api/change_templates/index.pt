@@ -1,0 +1,15 @@
+<change
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:attributes="
+  action context/action;
+  changed context/modified/isoformat;
+  id context/id;
+  oid context/oid;
+  principal context/principal;
+  otype context/otype;
+  "
+  >
+  <tal:def condition="context/referenced_obj/@@xml | nothing">
+    <tag tal:replace="structure context/referenced_obj/@@xml" />
+  </tal:def>
+</change>

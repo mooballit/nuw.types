@@ -1,0 +1,130 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:override fill-slot="top_slot"
+                tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                            disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                            dummy python:request.set('disable_border',1);"/>
+
+<metal:main fill-slot="main">
+    <h1 class="documentFirstHeading">Payment Methods</h1>
+    <p class="documentDescription">Search for payment Methods using the following, or navigate using the table below.</p>
+    <div class="method-search pull-right">
+        <form method="GET" class="search-from">
+            <div class="input-prepend input-append">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        Component
+                        <span class="caret white-caret"></span>
+                    </button>
+                    <ul id="filter-by" class="dropdown-menu" tal:define="form request/form; oldfilter python:form.get('filter', None)">
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="first_name" checked>
+                                First Name
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="last_name" tal:condition="python:oldfilter == 'last_name'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="last_name" tal:condition="python:not oldfilter == 'last_name'">
+                                Last Name
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="email" tal:condition="python:oldfilter == 'email'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="email" tal:condition="python:not oldfilter == 'email'">
+                                Email
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="card_type" tal:condition="python:oldfilter == 'card_type'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="card_type" tal:condition="python:not oldfilter == 'card_type'">
+                                Card Type
+                        </label></a></li>
+                    </ul>
+                </div>
+                <input class="span2" id="prependedDropdownButton" type="text" placeholder="Component" name="search" tal:attributes="value python:request.form.get('search', None) or ''">
+                <button type="submit" class="btn">Search</button>
+            </div>
+        </form>
+        <script type="text/javascript">
+            jQuery( function ( $ ) {
+                $( '#filter-by.dropdown-menu a' ).click( function ( e ) {
+                    if ( $( this ).attr( 'class' ) != 'pending' ) {
+                        $( 'button.dropdown-toggle' ).html($( this ).text() + '<span class="caret white-caret"></span>');
+                        $( '#prependedDropdownButton' ).attr("placeholder", $( this ).text().trim());
+                    }
+                } );
+                $( '#filter-by.dropdown-menu input[type="radio"]' ).each( function ( ) {
+                    if ( $( this ).is( ':checked' ) ) {
+                        $( 'button.dropdown-toggle' ).html($( this ).parents('label').text() + '<span class="caret white-caret"></span>');
+                        $( '#prependedDropdownButton' ).attr("placeholder", $( this ).parents('label').text().trim());
+                    }
+                } );
+            } );
+        </script>
+    </div>
+    <tal:batching define="batch view/batch">
+        <h3 class="nuw-subheader">Methods</h3>
+        <table tal:condition="batch" class="listing">
+            <thead>
+                <tr>
+                    <th class="nosort">Name</th>
+                    <th class="nosort">Email</th>
+                    <th class="nosort">Phone</th>
+                    <th class="nosort">Card Number</th>
+                    <th class="nosort">Card Type</th>
+                    <th class="nosort">Expiry</th>
+                    <th class="nosort">Default</th>
+                    <th class="nosort">Retain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tal:loopPeople tal:repeat="method batch/_sequence">
+                    <tr tal:define="odd repeat/method/odd;"
+                            tal:attributes="class python:odd and 'odd' or 'even'">
+                        <td> 
+                            <a tal:condition="method/personid" tal:attributes="href string:@@member-search?b_start_search:int=0&filter=personid&search=${method/personid}" tal:content="structure string:${method/first_name} ${method/last_name}">First Last</a>
+                            <span tal:condition="not:method/personid" tal:replace="structure string:${method/first_name} ${method/last_name}"></span>
+                        </td>
+                        <td> 
+                            <span tal:replace="structure method/email">email@email.com</span>
+                        </td>
+                        <td> 
+                            <span tal:replace="structure string:${method/phone}" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure string:${method/number}" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure string:${method/card_type}" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure string:${method/month}/${method/year}" />
+                        </td>
+                        <td> 
+                            <span tal:condition="method/defaulted">True</span>
+                        </td>
+                        <td> 
+                            <span tal:condition="method/retained">True</span>
+                        </td>
+                        <td> 
+                            <a tal:attributes="href string:@@member-trans?b_start_transaction:int=0&filter=paymentmethodid&search=${method/id}">Transactions</a>
+                        </td>
+                    </tr>
+                </tal:loopPeople>
+            </tbody>
+        </table>
+        
+        <p tal:condition="not:batch" class="documentDescription">There are no Methods found.</p>
+
+        <metal:navigation use-macro="context/batch_macros/macros/navigation"></metal:navigation>
+
+    </tal:batching>
+
+</metal:main>
+
+</body>
+</html>

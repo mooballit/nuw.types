@@ -1,0 +1,130 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:col-one metal:fill-slot="column_one_slot"></metal:col-one>
+<metal:col-two metal:fill-slot="column_two_slot"></metal:col-two>
+<metal:main metal:fill-slot="main">
+<h1 class="documentFirstHeading">Donation</h1>
+
+<tal:is-not-successful tal:condition="not:view/success">
+<div class="general-error" tal:condition="view/errors">
+<p>Donation payment failed due to following reasons:</p>
+<ul>
+    <tal:dup repeat="error view/errors">
+        <li tal:condition="python:error.has_key('text')" tal:content="error/text"></li>
+    </tal:dup>
+</ul>
+</div>
+    
+<tal:has-no-donation tal:condition="not:view/donation">
+<div class="donation-section choose-donation-amount img-rounded">
+    <form method="post">
+        <p>Please select your donation amount</p>
+        <div class="amounts">
+            <label><input type="radio" name="donation" value="5" /> $5</label>
+            <label><input type="radio" name="donation" value="10" /> $10</label>
+            <label><input type="radio" name="donation" value="20" /> $20</label>
+            <label><input type="radio" name="donation" value="50" /> $50</label>
+            <label><input type="radio" name="donation" value="100" /> $100</label>
+            <label><input type="radio" name="donation" value="200" /> $200</label>
+        </div>
+        <div class="visualClear"></div>
+        <div class="portlet-footer">
+            <label class="custom-label" for="custom-donation">Other: $</label>
+            <input id="custom-donation" class="custom-donation" type="text" placeholder="CUSTOM" name="custom-donation" />
+            <button class="btn pull-right portlet-button" type="submit">Donate <i class="arrow-icon right-dark-grey"></i></button>
+        </div>
+    </form>
+</div>
+</tal:has-no-donation>
+
+<tal:has-donation tal:condition="view/donation">
+<p>Donate $<span tal:replace="view/donation"></span> to the <span tal:replace="context/Title" /> Campaign</p>
+<tal:has-stored-pm tal:condition="view/persons_pms">
+<div class="donation-section">
+    <h3>Donate using one of your stored payment details</h3>
+    <p>Please select one of your credit cards from the dropdown and press donate.</p>
+    <form>
+        <input type="hidden" name="donation" tal:attributes="value view/donation" />
+        <select class="payment-methods" name="token">
+            <option tal:repeat="pm view/persons_pms" tal:attributes="value pm/token" tal:content="string:${pm/card_type/upper}: ${pm/number}"></option>
+        </select>
+        <button type="submit" class="btn pull-right portlet-button">Donate <i class="arrow-icon right-dark-grey"></i></button>
+        <div class="visualClear"></div>
+    </form>
+</div>
+<div class="donate-or">- or -</div>
+</tal:has-stored-pm>
+<div class="donation-section">
+    <h3>Donate using following payment details</h3>
+    <p>Please fill out your personal details and credit card information and press donate.</p>
+    <form action="https://spreedlycore.com/v1/payment_methods" method="post">
+        <input name="redirect_url" type="hidden" tal:attributes="value string:${view/request/ACTUAL_URL}?donation=${view/donation}" />
+        <input name="api_login" type="hidden" tal:attributes="value view/apilogin" />
+        
+        <div class="row-fluid">
+            <input class="span" placeholder="First Name" id="credit_card_first_name" name="credit_card[first_name]" type="text" tal:attributes="value view/data/first_name|nothing" />
+            <input class="span" placeholder="Last Name" id="credit_card_last_name" name="credit_card[last_name]" type="text" tal:attributes="value view/data/last_name|nothing" />
+        </div>
+        <div class="row-fluid">
+            <input class="span" placeholder="Email" id="credit_card_email" name="credit_card[email]" type="text" tal:attributes="value view/data/email|nothing" />
+            <input class="span" placeholder="Phone Number" id="credit_card_phone_number" name="credit_card[phone_number]" type="text" tal:attributes="value view/data/phone_number|nothing" />
+        </div>
+        <div class="row-fluid">
+            <input class="span" placeholder="Address" id="credit_card_address1" name="credit_card[address1]" type="text" tal:attributes="value view/data/address1|nothing" />
+            <input class="span" placeholder="City/Suburb" id="credit_card_city" name="credit_card[city]" type="text" tal:attributes="value view/data/city|nothing" />
+        </div>
+        <div class="row-fluid">
+            <input class="span" placeholder="State" id="credit_card_state" name="credit_card[state]" type="text" tal:attributes="value view/data/state|nothing" />
+            <input class="span" placeholder="Post Code" id="credit_card_zip" name="credit_card[zip]" type="text" tal:attributes="value view/data/zip|nothing" />
+        </div>
+        
+        <div tal:attributes="class python:'field card-number' + ( view.field_errors.get( 'number' ) and ' error' or '' )">
+            <p tal:condition='view/field_errors/number|nothing' tal:content="view/field_errors/number"></p>
+            <label for="credit_card_number">Card Number</label>
+            <input id="credit_card_number" name="credit_card[number]" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" />
+        </div>
+
+        <div tal:attributes="class python:'field row' + ( ( view.field_errors.get( 'month' ) or view.field_errors.get( 'year' ) or view.field_errors.get( 'verification_value' ) ) and ' error' or '' )">
+            <p tal:condition='view/field_errors/month|nothing' tal:content="view/field_errors/month"></p>
+            <p tal:condition='view/field_errors/year|nothing' tal:content="view/field_errors/year"></p>
+            <p tal:condition='view/field_errors/verification_value|nothing' tal:content="view/field_errors/verification_value"></p>
+            <div class="expiry span3">
+                <label for="credit_card_month">Expires on</label>
+                <select id="credit_card_month" name="credit_card[month]">
+                    <option value="null" tal:attributes="selected python: view.data.get('month') == None and 'selected' or ''">MM</option>
+                    <option
+                        tal:repeat="month python:[ str( m ).zfill( 2 ) for m in range( 1, 13 ) ]"
+                        tal:attributes="value month; selected python: view.data.get('month') == month and 'selected' or ''"
+                        tal:content="month">01</option>
+                </select>
+                <select id="credit_card_year" name="credit_card[year]">
+                    <option value="null" tal:attributes="selected python: view.data.get('year') == None and 'selected' or ''">YYYY</option>
+                    <option tal:repeat="year view/valid_years" tal:attributes="value year; selected python: view.data.get('year') == year and 'selected' or ''" tal:content="year"></option>
+                </select>
+            </div>
+            <div class="cvn pull-right">
+                <label for="credit_card_verification_value">Security Code</label>
+                <input class="cvn" id="credit_card_verification_value" name="credit_card[verification_value]" type="text" placeholder="000" />
+            </div>
+        </div>
+        <div class="visualClear"></div>
+        <button class="btn pull-right portlet-button" type='submit'>Donate ></button>
+        <div class="visualClear"></div>
+    </form>
+</div>
+</tal:has-donation>
+</tal:is-not-successful>
+
+<tal:is-successful tal:condition="view/success">
+<p>Thankyou for your donation to the <span tal:replace="context/Title" /> campaign.</p>
+</tal:is-successful>
+</metal:main>
+</body>
+</html>

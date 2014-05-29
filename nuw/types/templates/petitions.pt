@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:override fill-slot="top_slot"
+                tal:define="dummy python:request.set('disable_border',1);"/>
+    <metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading"> 
+            Petitions for <tal:campaigntitle tal:replace="context/Title" />
+        </h1>        
+    </metal:content-title>
+    <metal:content-core fill-slot="content-core" tal:define="contentFilter python:{ 'portal_type': 'nuw.types.petition', 'sort_on': 'created', 'sort_order': 'descending' }">
+        <a href="#" class="btn" tal:attributes="href string:${context/absolute_url}/++add++nuw.types.petition">Add New Petition</a>
+        <metal:block define-macro="listing" extend-macro="context/folder_listing/macros/content-core">
+            <!-- we don't want the dl -->
+            <metal:entries fill-slot="entries">
+                <form method="post">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Title</th>
+                                <th>Signatures</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tal:entry tal:repeat="item batch">
+                            <tr tal:define="obj item/getObject">
+                                <td>
+                                    <input type="checkbox" name="selected:list" tal:attributes="value item/id" />
+                                </td>
+                                <td>
+                                    <a tal:attributes="href item/getURL" tal:content="item/Title"></a>
+                                </td>
+                                <td>
+                                    <tal:sigs tal:replace="obj/get_nr_signees" /> of <tal:targetsigs tal:replace="obj/target_num" />
+                                </td>
+                            </tr>
+                            </tal:entry>
+                        </tbody>
+                    </table>
+                    <input type="submit" value="Delete Selected" name="delete_selected" class="btn" xmlns="">
+                </form>
+            </metal:entries>
+        </metal:block>
+    </metal:content-core>
+
+</body>
+</html>

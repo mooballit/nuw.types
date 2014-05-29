@@ -1,0 +1,12 @@
+This is a notification
+
+Dear <tal:first-name tal:replace="structure options/first_name" />,
+
+There has been a new post/reply on your <tal:site-name tal:replace="structure options/site_name" /> Worksite Noticeboard at <tal:time tal:replace="options/time" /> on <tal:date tal:replace="options/date" />:
+
+<tal:post-content tal:replace="options/content" />
+
+Go to the following URL to login and respond to the post.
+<tal:url tal:replace="options/url" />
+
+National Union of Workers

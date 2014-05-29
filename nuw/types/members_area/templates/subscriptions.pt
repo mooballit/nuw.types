@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+        <h2>Subscriptions</h2>
+        <div id="campaign-subscriptions">
+            <form method="POST">
+                <input type="hidden" name="submitted" value="submitted" />
+                <fieldset>
+                    <ol class="campaigns">
+                        <tal:dup repeat="campaign view/get_campaigns">
+                            <li  tal:condition="campaign/can_subscribe">
+                                <label class="checkbox">
+                                    <input type="checkbox" tal:condition="python:campaign.is_person_subscribed(view.person)" tal:attributes="name campaign/id" checked="checked" />
+                                    <input type="checkbox" tal:condition="python:not campaign.is_person_subscribed(view.person)" tal:attributes="name campaign/id" />
+                                    <a tal:attributes="href campaign/absolute_url" tal:content="campaign/title"></a>
+                                </label>
+                            </li>
+                        </tal:dup>
+                    </ol>
+                    <button type="submit" class="btn">Update Subscriptions<i class="arrow-icon right-white" /></button>
+                </fieldset>
+            </form>
+        </div>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

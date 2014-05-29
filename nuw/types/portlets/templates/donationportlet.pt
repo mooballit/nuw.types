@@ -1,0 +1,20 @@
+<div class="portlet donation-portlet img-rounded">
+    <form action="@@donate" method="post">
+        <h3>Donate</h3>
+        <p>Please select your donation amount</p>
+        <div class="amounts">
+            <label><input type="radio" name="donation" value="5" /> $5</label>
+            <label><input type="radio" name="donation" value="10" /> $10</label>
+            <label><input type="radio" name="donation" value="20" /> $20</label>
+            <label><input type="radio" name="donation" value="50" /> $50</label>
+            <label><input type="radio" name="donation" value="100" /> $100</label>
+            <label><input type="radio" name="donation" value="200" /> $200</label>
+        </div>
+        <div class="visualClear"></div>
+        <div class="portlet-footer">
+            <label class="custom-label" for="custom-donation">Other: $</label>
+            <input id="custom-donation" class="custom-donation" type="text" name="custom-donation" />
+            <button class="btn pull-right portlet-button" type="submit" >Donate <i class="arrow-icon right-dark-grey"></i></button>
+        </div>
+    </form>
+</div>

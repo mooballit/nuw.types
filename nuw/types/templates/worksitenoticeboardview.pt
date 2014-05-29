@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:content-core fill-slot="main">
+    <metal:content-core define-macro="main">
+        <h1 class="documentFirstHeading">Worksite Noticeboard</h1>
+        <tal:hasworksite tal:condition="view/worksite">
+        
+        <h3 tal:content="view/worksite/name">Worksite Name</h3>
+        <div tal:replace="structure view/renderwall" />
+        </tal:hasworksite>
+        <tal:nothasworksite tal:condition="not:view/worksite">
+            <tal:isadmin tal:condition="view/is_admin">
+                <h3>You're Logged in as an admin user with no direct link to a worksite. Choose a worksite from the top menu to see this feature.</h3>
+            </tal:isadmin>
+            <tal:notadmin tal:condition="not: view/is_admin">
+                <h3>You have no worksites.</h3>
+            </tal:notadmin>
+        </tal:nothasworksite>
+    </metal:content-core>
+</metal:content-core>
+
+</body>
+</html>
+

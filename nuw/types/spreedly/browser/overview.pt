@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+         xmlns:tal="http://xml.zope.org/namespaces/tal"
+         xmlns:metal="http://xml.zope.org/namespaces/metal"
+         xml:lang="en" lang="en"
+         tal:omit-tag="">
+  <p i18n:domain="pcommerce" i18n:translate="">
+      Payment will be processed via Credit Card
+  </p>
+  <tal:if condition="view/data/person_id">
+    <address tal:condition="view/data/method">
+      <span tal:content="view/data/method/first_name">First Name</span> <span tal:content="view/data/method/last_name">Last Name</span><br>
+      <span tal:content="view/data/method/number">Card Number</span><br>
+      <span tal:content="view/card_type">Card Type</span><br>
+      <span tal:content="view/data/method/month">Month</span>/<span tal:content="view/data/method/year">Year</span><br>
+    </address>
+  </tal:if>
+
+</html>

@@ -1,0 +1,20 @@
+From: info@nuw.org.au
+To: <tal:to-email tal:replace="options/to_email" />
+Subject: Community Membership Join; <tal:name tal:replace="options/name" />
+Hi,
+
+A person has just signed up to the Community Membership site.
+Please find their details below:
+
+Name: <tal:name tal:replace="options/name" />
+Date of birth: <tal:dob tal:replace="options/dob" />
+Email: <tal:email tal:replace="options/email" />
+Address:<tal:address tal:replace="options/address" />
+Suburb: <tal:suburb tal:replace="options/suburb" />
+State: <tal:state tal:replace="options/state" />
+Postcode: <tal:postcode tal:replace="options/postcode" />
+Phone: <tal:phone tal:replace="options/phone" />
+Mobile: <tal:mobile tal:replace="options/mobile" />
+
+Best Regards,
+nuw.org.au

@@ -1,0 +1,10 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:db="http://namespaces.zope.org/db"
+    i18n_domain="nuw.types">
+
+    <include package="z3c.saconfig" file="meta.zcml" />
+    <db:engine name="db" url="sqlite:///:memory:" />
+    <db:session name="nuw.types" engine="db" />
+
+</configure>

@@ -1,0 +1,17 @@
+From: info@nuw.org.au
+To: <tal:to-email tal:replace="options/to_email" />
+Subject: Join; Step 3; <tal:name tal:replace="options/name" />
+Hi,
+
+The following user just had an activation email sent to them.
+Please find their details below:
+
+Name: <tal:name tal:replace="options/name" />
+Email: <tal:email tal:replace="options/email" />
+Phone: <tal:phone tal:replace="options/phone" />
+Mobile: <tal:mobile tal:replace="options/mobile" />
+
+Click here to view the member: <tal:memberlink tal:replace="string:${options/portal_url}/@@member-search?b_start_search:int=0&filter=personid&search=${options/personid}" />
+
+Best Regards,
+nuw.org.au

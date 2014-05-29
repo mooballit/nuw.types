@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="record">
+  <data>
+    <record nuwassistid="215687" nuwdbid="" webadaptorid="762B9246-3C09-E211-B6A4-005056A2000A" recordid="762B9246-3C09-E211-B6A4-005056A2000A" notes="" type="Agreement" startdate="2011-06-30T00:00:00" enddate="2013-06-30T00:00:00" referencenumber="AE886377" />
+  </data>
+</message>

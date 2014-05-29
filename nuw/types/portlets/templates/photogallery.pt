@@ -1,0 +1,34 @@
+<dl class="portlet portletPhotoGallery">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="#" class="tile"
+           tal:attributes="href view/folder">Photo Gallery</a>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem">
+        <tal:dup repeat="image view/images">
+            <a tal:define="count repeat/image/number"
+                    tal:attributes="href string:${image/absolute_url}/image_preview; style string:background-image: url('${image/absolute_url}/image_thumb'); class python:((count % 4) == 0 and 'lastItem ' or (count % 4) == 1 and 'firstItem ' or '')+'tileImage photogallery-link'">
+            </a>
+        </tal:dup>
+    </dd>
+    
+    <div class="visualClear"></div>
+    
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <a tal:attributes="href view/folder" class="tile">More campaign photos...</a>
+        <span class="portletBottomRight"></span>
+    </dd>
+    
+    <script>
+        jQuery(function($){
+            $('a.photogallery-link').prepOverlay({
+                subtype: 'image',
+                cssclass: 'photogallery-preview'
+            });
+        });
+    </script>
+</dl>

@@ -1,0 +1,271 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:override fill-slot="top_slot"
+                tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                            disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                            dummy python:request.set('disable_border',1);"/>
+
+<metal:main fill-slot="main">
+    <h1 class="documentFirstHeading">Member Search</h1>
+    <p class="documentDescription">
+        Search for members using the following, or navigate using the table below.<br>
+        You can search for pending members by clicking the left button in the search bar and checking the checkbox.
+    </p>
+    <div class="member-search pull-right">
+        <form method="GET" class="search-from">
+            <div class="input-prepend input-append">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        Member Number
+                        <span class="caret white-caret"></span>
+                    </button>
+                    <ul id="filter-by" class="dropdown-menu" tal:define="form request/form; oldfilter python:form.get('filter', None)">
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="nuwdbid" checked>
+                                Member Number
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="nuwassistid" tal:condition="python:oldfilter == 'nuwassistid'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="nuwassistid" tal:condition="python:not oldfilter == 'nuwassistid'">
+                                Assist Number
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="firstname" tal:condition="python:oldfilter == 'firstname'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="firstname" tal:condition="python:not oldfilter == 'firstname'">
+                                First Name
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="lastname" tal:condition="python:oldfilter == 'lastname'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="lastname" tal:condition="python:not oldfilter == 'lastname'">
+                                Last Name
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="email" tal:condition="python:oldfilter == 'email'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="email" tal:condition="python:not oldfilter == 'email'">
+                                Email
+                        </label></a></li>
+                        <li><a><label tabindex="-1" class="radio">
+                                <input type="radio" class="pull-right" name="filter" value="webstatus" tal:condition="python:oldfilter == 'webstatus'" checked>
+                                <input type="radio" class="pull-right" name="filter" value="webstatus" tal:condition="python:not oldfilter == 'webstatus'">
+                                Web Status
+                        </label></a></li>
+                        <li class="divider"></li>
+                        <li><a class="pending"><label tabindex="-1" class="checkbox">
+                                <input type="checkbox" class="pull-right" name="pending" value="true" tal:condition="python:not form.get('pending', None)">
+                                <input type="checkbox" class="pull-right" name="pending" value="true" tal:condition="python:form.get('pending', None)" checked>
+                                Only show Pending
+                        </label></a></li>
+                    </ul>
+                </div>
+                <input class="span2" id="prependedDropdownButton" type="text" placeholder="Member Number" name="search" tal:attributes="value python:request.form.get('search', None) or ''">
+                <button type="submit" class="btn">Search</button>
+            </div>
+        </form>
+        <script type="text/javascript">
+            jQuery( function ( $ ) {
+                $( '#filter-by.dropdown-menu a' ).click( function ( e ) {
+                    if ( $( this ).attr( 'class' ) != 'pending' ) {
+                        $( 'button.dropdown-toggle' ).html($( this ).text() + '<span class="caret white-caret"></span>');
+                        $( '#prependedDropdownButton' ).attr("placeholder", $( this ).text().trim());
+                    }
+                } );
+                $( '#filter-by.dropdown-menu input[type="radio"]' ).each( function ( ) {
+                    if ( $( this ).is( ':checked' ) ) {
+                        $( 'button.dropdown-toggle' ).html($( this ).parents('label').text() + '<span class="caret white-caret"></span>');
+                        $( '#prependedDropdownButton' ).attr("placeholder", $( this ).parents('label').text().trim());
+                    }
+                } );
+            } );
+        </script>
+    </div>
+    <tal:batching define="batch view/batch; pending python:request.form.get('pending', None)">
+        <h3 class="nuw-subheader">Members</h3>
+        <p tal:condition="pending" class="documentDescription">Only showing Pending Accounts</p>
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th class="nosort">NUW Number</th>
+                    <th class="nosort">NUW Assist</th>
+                    <th class="nosort">Name</th>
+                    <th class="nosort">Location</th>
+                    <th class="nosort">Mobile</th>
+                    <th class="nosort">Web Status</th>
+                    <th class="nosort">Email</th>
+                    <th class="nosort" tal:condition="not:pending">Login</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tal:loopPeople tal:repeat="person batch/_sequence">
+                    <tr tal:define="odd repeat/person/odd"
+                            tal:attributes="class python:odd and 'odd' or 'even'">
+                        <td> 
+                            <span tal:replace="structure person/nuwdbid" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure person/nuwassistid" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure string:${person/firstname} ${person/lastname}" />
+                        </td>
+                        <td> 
+                            <span tal:condition="python:person.homesuburb and person.homestate" tal:replace="structure string:${person/homesuburb}, ${person/homestate}" />
+                        </td>
+                        <td style="white-space: nowrap;"> 
+                            <span tal:replace="structure person/mobile" />
+                        </td>
+                        <td> 
+                            <span tal:replace="structure person/webstatus" />
+                        </td>
+                        <td class="nuwemail"> 
+                            <a class="update-email" href="#" tal:condition="person/email" tal:attributes="id person/personid" tal:content="structure person/email">email@email.com</a>
+                            <a class="update-email" href="#" tal:condition="not:person/email" tal:attributes="id person/personid">Add Email</a>
+                        </td>
+                        <td tal:condition="not:pending"> 
+                            <a class="password-reset" href="#" tal:condition="person/user_id" tal:attributes="id person/personid">Reset</a>
+                        </td>
+                        <td> 
+                            <a tal:attributes="href string:@@member-trans?b_start_transaction:int=0&filter=personid&search=${person/personid}">Transactions</a>
+                        </td>
+                        <td> 
+                            <a tal:attributes="href string:@@member-methods?b_start_method:int=0&filter=personid&search=${person/personid}">Methods</a>
+                        </td>
+                    </tr>
+                </tal:loopPeople>
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+            function emailupdate() {
+                $( '#email-update' ).validate( {
+                    submitHandler: function( form ) {
+                        jQuery.ajax( {
+                            url: 'member-emailupdate',
+                            type: 'post',
+                            dataType: 'json',
+                            data: jQuery( '#email-update' ).serialize( ),
+                            success: function( data ) {
+                                if('success' in data) {
+                                    $( '#email-update' ).html( 'Email confirmation sent successfully!' + data['sent'] );
+                                } else {
+                                    $( '#email-update' ).prepend('<div id="update-alert" class="alert"><strong>Error</strong>' + data['error'] + '</div>');
+                                    $( '#update-alert' ).delay(8000).fadeOut(1500);
+                                }
+                            },
+                            error: function(errorThrown){
+                               console.log(errorThrown);
+                            }
+                        });
+                    }
+                });
+            }
+
+            function passwordreset() {
+                $( '#password-reset' ).validate( {
+                    submitHandler: function( form ) {
+                        jQuery.ajax( {
+                            url: 'member-passwordreset',
+                            type: 'post',
+                            dataType: 'json',
+                            data: jQuery( '#password-reset' ).serialize( ),
+                            success: function( data ) {
+                                if('success' in data) {
+                                    $( '#password-reset' ).html( 'Password reset sent successfully!' + data['sent'] );
+                                } else {
+                                    $( '#password-reset' ).prepend('<div id="update-alert" class="alert"><strong>Error</strong>' + data['error'] + '</div>');
+                                    $( '#update-alert' ).delay(8000).fadeOut(1500);
+                                }
+                            },
+                            error: function(errorThrown){
+                               console.log(errorThrown);
+                            }
+                        });
+                    }
+                });
+            }
+
+            $( function () {
+                $( 'a.update-email' ).popover( {
+                    trigger: 'manual',
+                    placement: 'bottom',
+                    title: 'Update User Email <a class="close" href="#">&times;</a>',
+                    html: true,
+                    content: function () {
+                        return  "<div>" +
+                                "<p>Update the users email by adding the new email. This will send out a confirmation email.</p>" +
+                                "<div class='alert' style='display: none'></div>" +
+                                "<form id='email-update' method='post'>" +
+                                "<input id='email' placeholder='New Email' type='text' name='emailupdate.new_email' /><br />" +
+                                "<input type='hidden' name='emailupdate.personid' value='"+$( this ).attr('id')+"' /> " +
+                                "<button type='submit' class='btn'>Send</button>" +
+                                "<div class='visualClear'></div>" +
+                                "</div>" +
+                                "</form>";
+                    }
+                } );
+                $( 'a.update-email' ).click( function ( e ) {
+                    e.preventDefault();
+                    $( 'a.update-email' ).popover( 'hide' );
+                    if ( $( this ).data('popover').tip().hasClass('in') )
+                        $( this ).popover( 'hide' );
+                    else
+                        $( this ).popover( 'show' );
+                        emailupdate();
+                    $( this ).data('popover').tip().addClass( 'email-update-popover' );
+                    $( this ).data('popover').tip().find( '.close' ).click( function ( e ) {
+                        e.preventDefault();
+                        $( 'a.update-email' ).popover( 'hide' );
+                    } );
+                } );
+
+                $( 'a.password-reset' ).popover( {
+                    trigger: 'manual',
+                    placement: 'bottom',
+                    title: 'Reset Password <a class="close" href="#">&times;</a>',
+                    html: true,
+                    content: function () {
+                        return  "<div>" +
+                                "<p>Reset the users password. This will send out a confirmation email.</p>" +
+                                "<div class='alert' style='display: none'></div>" +
+                                "<form id='password-reset' method='post'>" +
+                                "<input type='hidden' name='passwordreset.personid' value='"+$( this ).attr('id')+"' /> " +
+                                "<button type='submit' class='btn'>Reset Password?</button>" +
+                                "<div class='visualClear'></div>" +
+                                "</div>" +
+                                "</form>";
+                    }
+                } );
+                $( 'a.password-reset' ).click( function ( e ) {
+                    e.preventDefault();
+                    $( 'a.password-reset' ).popover( 'hide' );
+                    if ( $( this ).data('popover').tip().hasClass('in') )
+                        $( this ).popover( 'hide' );
+                    else
+                        $( this ).popover( 'show' );
+                        passwordreset();
+                    $( this ).data('popover').tip().addClass( 'password-reset-popover' );
+                    $( this ).data('popover').tip().find( '.close' ).click( function ( e ) {
+                        e.preventDefault();
+                        $( 'a.password-reset' ).popover( 'hide' );
+                    } );
+                } );
+
+            } );
+        </script>
+
+        <p tal:condition="not:batch" class="documentDescription">There are no Members found.</p>
+
+        <metal:navigation use-macro="context/batch_macros/macros/navigation"></metal:navigation>
+
+    </tal:batching>
+</metal:main>
+
+</body>
+</html>

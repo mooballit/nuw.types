@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<rolemap>
+  <permissions>
+    <permission name="PCommerce: Check out" acquire="False">
+      <role name="Anonymous" />
+      <role name="Authenticated" />
+    </permission>
+  </permissions>
+</rolemap>

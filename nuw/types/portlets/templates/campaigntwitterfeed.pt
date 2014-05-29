@@ -1,0 +1,38 @@
+<dl class="portlet campaign-twitter-feed-portlet">
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a tal:attributes="href string:http://twitter.com/search?q=%23${context/tw_hash_tag}&lang=all" class="tile">
+            Campaign Twitter Feed
+        </a>
+        <span class="portletTopRight"></span>
+    </dt>
+    <p class="description">Tweet your voice with <a title="Share on Twitter" tal:attributes="class string:hashshare twitter; href string:http://twitter.com/home?status=${context/title}+${context/absolute_url}+%23${context/tw_hash_tag}"><strong>#<strong tal:replace="context/tw_hash_tag" /></strong></a></p>
+    <dd class="portletItem">
+        <div class="tweets" tal:attributes="data-hash-tag context/tw_hash_tag; data-nr-tweets view/data/nr_tweets"></div>
+    </dd>
+    <dd class="portletFooter">
+        <a tal:attributes="href string:http://twitter.com/search?q=%23${context/tw_hash_tag}&lang=all" class="tile">
+                More campaign tweets…
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+    <script type="text/javascript" src="++resource++nuw.types.js/jquery.tweet.js"></script>
+    <script type="text/javascript">
+        jQuery( function ( $ ) {
+            var hash_tag = $( '.tweets' ).data( 'hashTag' ),
+                nr_tweets = $( '.tweets' ).data( 'nrTweets' );
+            $( '.tweets' ).tweet( {
+                modpath: '@@twitter-json',
+                query: "#" + hash_tag,
+                loading_text: 'Loading Tweets...',
+                count: nr_tweets,
+                avatar_size: 32
+            } );
+            $( '.hashshare.twitter' ).live( 'click', function ( e ) {
+                e.preventDefault();
+                window.open($(this).attr("href"), 'popUpWindow', 'height=240,width=550,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=yes')
+            } );
+        } );
+    </script>
+</dl>

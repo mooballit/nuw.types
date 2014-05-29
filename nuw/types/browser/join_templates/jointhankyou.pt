@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main define-macro="main">
+        <h1>Thank you for your application to join the NUW.</h1>
+        <div class="description">
+            We will process your request and shall be in contact with you.
+            If you have not heard from us in a reasonable amount of time, please contact us using the details from the bottom right of this page.
+        </div>
+      </metal:main>
+    </metal:main>
+
+  </body>
+</html>

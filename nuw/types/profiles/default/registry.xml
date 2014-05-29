@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<registry>
+    <records interface="nuw.types.api.settings.IAPISettings" />
+    <records interface="nuw.types.social.ISocialSettings" />
+    <records interface="nuw.types.admin_area.interfaces.IRecurringSettings" />
+    <records interface="nuw.types.admin_area.interfaces.IAdminEmails" />
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.campaign_type">
+        <value key="title">Campaign Type</value>
+        <value key="description">Campaign Type</value>
+        <value key="enabled">True</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.selection.is</element>
+        </value>
+        <value key="vocabulary">nuw.types.campaign_types</value>
+        <value key="group">Metadata</value>
+    </records>
+</registry>

@@ -1,0 +1,69 @@
+<configure
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:plone="http://namespaces.plone.org/plone">
+    
+    <include package="plone.app.portlets"/>
+
+    <plone:portlet
+        name="nuw.portlets.quicklinks"
+        interface=".quicklinks.IQuickLinksPortlet"
+        assignment=".quicklinks.Assignment"
+        renderer=".quicklinks.Renderer"
+        addview=".quicklinks.AddForm"
+        editview=".quicklinks.EditForm"
+        />
+        
+    <plone:portlet
+        name="nuw.portlets.signpetition"
+        interface=".signpetition.ISignPetitionPortlet"
+        assignment=".signpetition.Assignment"
+        renderer=".signpetition.Renderer"
+        addview=".signpetition.AddForm"
+        editview=".signpetition.EditForm"
+        />
+
+    <plone:portlet
+        name="nuw.portlets.donation"
+        interface=".donation.IDonationPortlet"
+        assignment=".donation.Assignment"
+        renderer=".donation.Renderer"
+        addview=".donation.AddForm"
+        editview=".donation.EditForm"
+        />
+
+    <plone:portlet
+        name="nuw.portlets.subscribe"
+        interface=".subscribe.ISubscriptionPortlet"
+        assignment=".subscribe.Assignment"
+        renderer=".subscribe.Renderer"
+        addview=".subscribe.AddForm"
+        editview=".subscribe.EditForm"
+        />
+
+    <plone:portlet
+        name="nuw.portlets.socialshare"
+        interface=".socialshare.ISocialSharePortlet"
+        assignment=".socialshare.Assignment"
+        renderer=".socialshare.Renderer"
+        addview=".socialshare.AddForm"
+        editview=".socialshare.EditForm"
+        />
+
+    <plone:portlet
+        name="nuw.portlets.twitterfeed"
+        interface=".twitterfeed.ICampaignTwitterFeedPortlet"
+        assignment=".twitterfeed.Assignment"
+        renderer=".twitterfeed.Renderer"
+        addview=".twitterfeed.AddForm"
+        editview=".twitterfeed.EditForm"
+        />
+
+    <plone:portlet
+        name="nuw.portlets.photogallery"
+        interface=".photogallery.IPhotoGalleryPortlet"
+        assignment=".photogallery.Assignment"
+        renderer=".photogallery.Renderer"
+        addview=".photogallery.AddForm"
+        editview=".photogallery.EditForm"
+        />
+</configure>

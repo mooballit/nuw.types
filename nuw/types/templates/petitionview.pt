@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n_domain="nuw.types">
+<body>
+    
+<metal:content-core fill-slot="content-core">
+    <metal:content-core define-macro="content-core">
+        <div tal:condition="context/text" tal:replace="structure context/text/output" />
+        <div id="progress-bar" class="progress">
+            <div class="bar" tal:attributes="style view/progressPercentWidth"></div>
+        </div>
+        <div id="signee-amount"><b tal:content="view/totalSignees"></b> out of target <b tal:content="view/target_num"></b></div>
+        <tal:signees condition="view/haveSignees">
+            <h3 class="nuw-subheader" i18n:translate="title_group_subareas">Latest Signees</h3>
+                <table id="signee-table">
+                    <tr>    
+                        <th>Name</th>
+                        <th>Country</th>
+                    </tr>
+                    <tal:block repeat="signee view/getSignees">
+                    <tr tal:condition="signee/public">
+                        <td tal:content="string:${signee/first_name} ${signee/last_name}" />  
+                        <td tal:content="signee/country" />
+                    </tr>
+                    </tal:block>
+                </table>
+        </tal:signees>
+    </metal:content-core>
+</metal:content-core>
+
+</body>
+</html>

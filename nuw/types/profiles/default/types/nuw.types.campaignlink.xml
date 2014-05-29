@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<object name="nuw.types.campaignlink" meta_type="Dexterity FTI"
+    i18n:domain="nuw.types" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+    <!-- Basic metadata -->
+    <property name="title" i18n:translate="">Campaign Link</property>
+    <property name="description" i18n:translate="">NUW Campaign Link</property>
+    <property name="content_icon">++theme++nuw.types/campaign.png</property>
+    <property name="allow_discussion">False</property>
+    <property name="global_allow">True</property>
+    <property name="filter_content_types">False</property>
+    <property name="allowed_content_types" />
+
+    <!-- schema interface -->
+    <property name="schema">nuw.types.campaign_link.ICampaignLink</property> 
+
+    <!-- class used for content items -->
+    <property name="klass">nuw.types.campaign_link.CampaignLink</property>
+
+    <!-- add permission -->
+    <property name="add_permission">cmf.AddPortalContent</property>
+
+    <!-- enabled behaviors -->
+    <property name="behaviors" />
+
+    <!-- View information -->
+    <property name="default_view_fallback">False</property>
+    <property name="default_view">link_redirect_view</property>
+    <property name="view_methods">
+      <element value="link_redirect_view"/>
+    </property>
+
+    <!-- Method aliases -->
+    <alias from="(Default)" to="(dynamic view)"/>
+    <alias from="edit" to="atct_edit"/>
+    <alias from="sharing" to="@@sharing"/>
+    <alias from="view" to="(selected layout)"/>
+
+    <!-- Actions -->
+    <action title="View" action_id="view" category="object" condition_expr=""
+        url_expr="string:${object_url}" visible="True"
+        i18n:attributes="title">
+      <permission value="View"/>
+    </action>
+    <action title="Edit" action_id="edit" category="object" condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
+        url_expr="string:${object_url}/edit" visible="True"
+        i18n:attributes="title">
+      <permission value="Modify portal content"/>
+    </action>
+    <action title="External Edit" action_id="external_edit" category="object"
+        condition_expr="object/externalEditorEnabled"
+        url_expr="string:${object_url}/external_edit" visible="False"
+        i18n:attributes="title">
+      <permission value="Modify portal content"/>
+    </action>
+</object>

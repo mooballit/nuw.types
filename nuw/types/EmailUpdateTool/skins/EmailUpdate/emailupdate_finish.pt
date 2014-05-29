@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+<body>
+<metal:override fill-slot="top_slot"
+                tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                            disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                            dummy python:request.set('disable_border',1);"/>
+<metal:main fill-slot="main">
+    <h1 class="documentFirstHeading"
+        i18n:translate="heading_pwreset_success">Email set</h1>
+    <div class="documentDescription">
+        Your new email has been set successfully.
+    </div>
+</metal:main>
+
+</body>
+</html>

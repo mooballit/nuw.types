@@ -1,0 +1,19 @@
+Dear <tal:first-name tal:replace="structure options/first_name" />,<br />
+<br />
+Your union rep has just posted an important message on your <tal:site-name tal:replace="structure options/site_name" /> worksite noticeboard:<br />
+<br />
+<tal:post-content tal:replace="options/content" /><br />
+<br />
+To respond, ask a question or get more information, follow <a tal:attributes="href options/url">this link</a> and login to My NUW online.<br />
+<br />
+Haven't logged in yet? No problem, <a href="https://www.nuw.org.au/membership/activation.html">activate your account here</a> with your membership number.<br />
+<br />
+<tal:is-potential tal:condition="options/is_potential">If you have not joined your union yet, speak to your delegate or organiser, or call NUW Assist on 1300 275 689, for further information.<br />
+<br />
+</tal:is-potential><tal:is-members tal:condition="options/is_members">Remember,  if you have any questions speak to your delegate. You can also call and speak to an organiser at NUW Assist on 1300 275 689, or email <a href="mailto:nuwassist@nuw.org.au">nuwassist@nuw.org.au</a><br />
+<br />
+</tal:is-members>
+Unity is Strength,<br />
+<br />
+<tal:from tal:replace="options/from_name" /><br />
+NUW delegate

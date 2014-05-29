@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main define-macro="main">
+        <div class="wrapper wrapper-style2">
+        <section id="benefits">
+            <div class="row-fluid">
+                <div class="span6">
+                    <h2>Thank you for becoming an NUW Community Member</h2>
+                    <p class="description">
+                        We will process your request and shall be in contact with you.
+                        If you have not heard from us in a reasonable amount of time, please contact us using the details from the bottom right of this page.
+                    </p>
+                </div>
+            </div>
+        </section>
+        </div>
+
+
+        <div class="wrapper wrapper-style4">
+<section id="footer">
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="/++theme++nuwcommunity.theme/img/jointheconvo.png"/>
+            <ul class="social-links">
+                <li class="facebook"><a href="http://facebook.com/NatUnionWorkers">facebook.com/NatUnionWorkers</a></li>
+                <li class="twitter"><a href="https://twitter.com/NatUnionWorkers">@NatunionWorkers</a></li>
+                <li class="web"><a href="http://www.jobsyoucancounton.com.au">jobsyoucancounton.com.au</a></li>
+            </ul>
+        </div>
+        <div class="span4">
+            <div class="row-fluid">
+                <img style="float: right" src="/++theme++nuwcommunity.theme/img/greenlogo.png"/>
+            </div>
+            <div style="margin-top: 50px" class="row-fluid">
+                <img style="float: right" src="/++theme++nuwcommunity.theme/img/jobsfooter.png"/>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+      </metal:main>
+    </metal:main>
+
+  </body>
+</html>

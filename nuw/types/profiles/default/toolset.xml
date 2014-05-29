@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tool-setup>
+ <required tool_id="portal_syncapi" class="nuw.types.api.tool.SyncAPITool"/>
+ <required tool_id="portal_email_update" class="nuw.types.EmailUpdateTool.EmailUpdateTool.EmailUpdateTool"/>
+ <required tool_id="image_store" class="nuw.types.imagestore.ImageStoreTool"/>
+ <required tool_id="splash_tool" class="nuw.types.admin_area.splashupload.SplashUploadTool"/>
+</tool-setup>

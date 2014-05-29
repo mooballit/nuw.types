@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xml:lang="en" lang="en"
+      i18n:domain="pcommerce"
+      tal:omit-tag="">
+  <div id="process" class="component">
+    <h2 i18n:translate="">
+      Process Order
+    </h2>
+    <div class="process clearfix">
+      <div class="process">
+        <div class="logo" tal:condition="view/payment/logo">
+          <img src="" tal:attributes="src view/payment/logo" />
+        </div>
+        <div class="address" tal:define="errors view/data/errors">
+            <input name="redirect_url" type="hidden" tal:attributes="value view/redirect" />
+            <input name="api_login" type="hidden" tal:attributes="value view/api_login" />
+            
+            <input name="credit_card[email]" type="hidden" tal:attributes="value view/order/address/email" />
+            <input name="credit_card[address1]" type="hidden" tal:attributes="value view/order/address/address1" />
+            <input name="credit_card[address2]" type="hidden" tal:attributes="value view/order/address/address2" />
+            <input name="credit_card[city]" type="hidden" tal:attributes="value view/order/address/city" />
+            <input name="credit_card[zip]" type="hidden" tal:attributes="value view/order/address/zip" />
+            <input name="credit_card[country]" type="hidden" tal:attributes="value view/order/address/country" />
+            <input name="credit_card[phone_number]" type="hidden" tal:attributes="value view/order/address/phone" />
+          
+            <div class="field clearfix" tal:attributes="class python:'field clearfix'+(errors.has_key('first_name') and ' error' or '')">
+                <label for="credit_card_first_name">First name</label>
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+                <div tal:condition="python:errors.has_key('first_name')"
+                     tal:content="python:errors['first_name'] or None">
+                    The Error
+                </div>
+                <div class="widget">
+                    <input placeholder="J." id="credit_card_first_name" name="credit_card[first_name]" type="text" tal:attributes="value view/firstname|nothing" />
+                </div>
+            </div>
+            
+            <div class="field clearfix" tal:attributes="class python:'field clearfix'+(errors.has_key('last_name') and ' error' or '')">
+                <label for="credit_card_last_name">Last name</label>
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+                <div tal:condition="python:errors.has_key('last_name')"
+                     tal:content="python:errors['last_name'] or None">
+                    The Error
+                </div>
+                <div class="widget">
+                    <input placeholder="Smith" id="credit_card_last_name" name="credit_card[last_name]" type="text" tal:attributes="value view/lastname|nothing" />
+                </div>
+            </div>
+            
+            <div class="field clearfix" tal:attributes="class python:'field clearfix'+(errors.has_key('number') and ' error' or '')">
+                <label for="credit_card_number">Card Number</label>
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+                <div tal:condition="python:errors.has_key('number')"
+                     tal:content="python:errors['number'] or None">
+                    The Error
+                </div>
+                <div class="widget">
+                    <input placeholder="XXXX-XXXX-XXXX-XXXX" id="credit_card_number" name="credit_card[number]" type="text" tal:attributes="value view/card_number|nothing" />
+                </div>
+            </div>
+            
+            <div class="field clearfix" tal:attributes="class python:'field clearfix'+(errors.has_key('verification_value') and ' error' or '')">
+                <label for="credit_card_verification_value">Security Code</label>
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+                <div tal:condition="python:errors.has_key('verification_value')"
+                     tal:content="python:errors['verification_value'] or None">
+                    The Error
+                </div>
+                <div class="widget">
+                    <input placeholder="000" id="credit_card_verification_value" name="credit_card[verification_value]" type="text" tal:attributes="value view/card_cvn|nothing" />
+                </div>
+            </div>
+            
+            <div class="field clearfix" tal:attributes="class python:'field clearfix'+(errors.has_key('year') and ' error' or '')">
+                <label>Expires on</label>
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+                <div tal:condition="python:errors.has_key('year')"
+                     tal:content="python:errors['year'] or None">
+                    The Error
+                </div>
+                <div class="widget">
+                    <select id="credit_card_month" name="credit_card[month]">
+                        <option selected="selected" value="null">MM</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select id="credit_card_year" name="credit_card[year]">
+                        <option selected="selected" value="null">YYYY</option>
+                        <option tal:repeat="year view/valid_years" tal:attributes="value year" tal:content="year"></option>
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    
+    <metal:process use-macro="context/@@pcommerce_macros/cartInfo" />
+  </div>
+</html>

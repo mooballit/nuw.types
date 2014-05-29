@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:override fill-slot="top_slot"
+                tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                            disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                            dummy python:request.set('disable_border',1);"/>
+
+<div metal:fill-slot="prefs_configlet_main">
+
+    <h1 class="documentFirstHeading"
+        i18n:translate=""> NUW Administration Area</h1>
+
+    <p class="documentDescription" i18n:translate="description_control_panel">
+        Configuration area for the National Union of Workers.
+    </p>
+
+    <div class="visualClear"><!-- --></div>
+
+    <tal:category tal:repeat="category view/categories">
+
+        <h2 tal:content="category/title"
+            i18n:translate="">Category</h2>
+
+        <div tal:define="configlets category/configlets">
+
+            <ul class="configlets">
+                <tal:configlets tal:repeat="configlet configlets">
+                  <li style="float:left; margin-right: 1em; width: 29%">
+                      <a href=""
+                         tal:attributes="href configlet/url">
+                          <img src="" alt=""
+                               tal:attributes="src string:${portal_url}/maintenance_icon.png" />
+                          <tal:title tal:content="configlet/title">
+                              Title
+                          </tal:title>
+                      </a>
+                  </li>
+              </tal:configlets>
+            </ul>
+
+            <div class="visualClear"><!-- --></div>
+
+            <div class="discreet"
+                 tal:condition="not:configlets">
+                No preference panels available.
+            </div>
+
+        </div>
+
+    </tal:category>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+From: <tal:from tal:replace="options/from_name" /> <tal:lt tal:replace="structure string:&lt;" /><tal:from tal:replace="options/from_email" /><tal:gt tal:replace="structure string:&gt;" />
+To: <tal:to tal:replace="options/to_email" />
+Subject: Page recommendation from <tal:from tal:replace="options/from_name" />
+Content-Type: text/plain;
+<tal:from tal:replace="options/from_name" /> has recommended that you visit the following page:
+<tal:url tal:replace="options/url" />

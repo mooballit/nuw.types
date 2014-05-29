@@ -1,0 +1,94 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:db="http://namespaces.zope.org/db"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="nuw.types">
+
+    <five:registerPackage package="." initialize=".initialize" />
+    <includeDependencies package="." />
+    <plone:static directory="resources" type="theme" name="nuw.types" />
+    <grok:grok package="." />
+    <genericsetup:registerProfile
+      name="default"
+      title="NUW Content Types"
+      directory="profiles/default"
+      description="Extension profile for NUW Content Types"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+    <include package=".upgrades" />
+    <include package=".api" />
+    <include package=".browser" />
+    <include package=".portlets" />
+    <include package=".spreedly" />
+    <include package=".EmailUpdateTool" />
+
+    <browser:menuItem
+      for="Products.CMFCore.interfaces.IFolderish"
+      menu="plone_displayviews"
+      title="Campaigns Listing"
+      action="campaignlisting"
+      description="List campaigns in a nice way."
+      />
+
+    <browser:menuItem
+      for="plone.app.collection.interfaces.ICollection"
+      menu="plone_displayviews"
+      title="Campaigns Listing"
+      action="campaignlisting"
+      description="List campaigns in a nice way."
+      />
+
+    <interface interface=".interfaces.IUnionRep" />
+    <interface interface=".interfaces.IActivationContext" />
+
+    <permission
+        id="nuw.types.wall.can_post"
+        title="nuw.types: Add wall post"
+        />
+    <permission
+        id="nuw.types.wall.can_reply"
+        title="nuw.types: Reply to wall posts"
+        />
+    <permission
+        id="nuw.types.wall.can_delete"
+        title="nuw.types: Delete wall posts/replies"
+        />
+    <permission
+        id="nuw.types.wall.can_view_private"
+        title="nuw.types: View private wall posts"
+        />
+
+    <permission
+        id="nuw.types.group.access_all_worksites"
+        title="nuw.types: Access all worksites"
+        />
+
+    <adapter
+      factory="z3c.traverser.traverser.PluggableTraverser"
+      for="nuw.types.interfaces.IActivationContext
+           zope.publisher.interfaces.IPublisherRequest"
+      />
+
+    <adapter
+      for=".campaign_link.ICampaignLink"
+      provides=".campaign_link.INameFromCampaign"
+      factory=".campaign_link.NameFromCampaign"
+      />
+
+    <subscriber
+      factory=".base.PersonUUIDTraverser"
+      for="nuw.types.interfaces.IActivationContext
+           zope.publisher.interfaces.IPublisherRequest"
+      provides="z3c.traverser.interfaces.ITraverserPlugin"
+      />
+
+    <adapter name="parent_campaign" factory=".indexers.newsitem_campaign" />
+    <adapter name="parent_industry" factory=".indexers.newsitem_industry" />
+
+</configure>

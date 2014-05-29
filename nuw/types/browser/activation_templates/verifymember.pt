@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <body>
+    <metal:main fill-slot="main"
+      tal:define="person context/table;
+      portal_url context/@@plone_portal_state/portal_url">
+      <tal:error tal:condition="view/memberHasLogin">
+        <h1 tal:content="view/memberHasLoginErrorLabel" />
+        <p>
+          You already have a nuw.org.au Site Login (<span
+            tal:replace="person/email" />).
+          Click the button below if you have forgotten your password and
+          we will send you an email explaining how to reset it.
+          <a tal:define="url string:$portal_url/mail_password_form"
+            tal:attributes="href url;">I would like to reset my password</a>.
+        </p>
+      </tal:error>
+      <tal:form tal:condition="not:view/memberHasLogin">
+        <h1 tal:content="view/label" />
+        <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
+      </tal:form>
+    </metal:main>
+
+  </body>
+</html>

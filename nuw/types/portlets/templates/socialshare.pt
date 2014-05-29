@@ -1,0 +1,19 @@
+<div class="portlet portletSocialShare">
+    <h2>Share</h2>
+    <div class="social-icons">
+        <a title="Share on Facebook" tal:attributes="class string:button facebook; href string:http://www.facebook.com/sharer.php?u=${view/data/get_encoded_url}"><i class="social-icon facebook"></i></a>
+        <a title="Share on Twitter" tal:attributes="class string:button twitter; href string:http://twitter.com/home?status=${view/data/get_encoded_title}+${view/data/get_encoded_url}+${view/data/get_encoded_twitter_ref}"><i class="social-icon twitter"></a>
+        <a title="Share on Google+" tal:attributes="class string:button googleplus; href string:https://plus.google.com/share?url=${view/data/get_encoded_url}"><i class="social-icon google-plus"></a>
+        <a title="Share on LinkedIn" tal:attributes="class string:button linkedin; href string:http://www.linkedin.com/shareArticle?mini=true&url=${view/data/get_encoded_url}&title=${view/data/get_encoded_title}"><i class="social-icon linkedin"></a>
+        <a title="Share over Email" class="button email" href="@@emailshare"><i class="social-icon email"></a>
+    </div>
+    <div class="visualClear"></div>
+    <script type="text/javascript">
+        $( function () {
+            $( '.button.googleplus, .button.facebook, .button.twitter, .button.linkedin, .button.email' ).live( 'click', function ( e ) {
+                e.preventDefault();
+                window.open($(this).attr("href"), 'popUpWindow', 'height=240,width=550,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=yes')
+            } );
+        });
+    </script>
+</div>

@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xml:lang="en" lang="en"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="pcommerce">
+
+<body>
+
+  <div metal:fill-slot="prefs_configlet_main">
+
+        <h1 class="documentFirstHeading" >
+            Shipping Configuration for Spreedly
+        </h1>
+
+        <a href=""
+           class="link-parent"
+           tal:attributes="href string: $portal_url/plone_control_panel"
+           i18n:domain="plone"
+           i18n:translate="label_up_to_plone_setup">
+            Up to Site Setup
+        </a>
+
+        <form action="."
+              metal:define-macro="master"
+              tal:attributes="action request/URL;"
+              method="post"
+              id="pcommerce_configlet"
+              class="edit-form enableUnloadProtection"
+              tal:define="errors view/errors">
+                
+            <div class="field"
+                 tal:attributes="class python:'field'+(errors.has_key('parcel_itemcharge') and ' error' or '')">
+
+                <label for="parcel_itemcharge">
+                    Item Shipping Charge
+                </label>
+
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+
+                <div class="formHelp">
+                    The price per item for shipping.
+                </div>
+
+                <div tal:condition="python:errors.has_key('parcel_itemcharge')"
+                     tal:content="errors/parcel_itemcharge|nothing">
+                    The Error
+                </div>
+
+                <div class="widget">
+                    <input id="parcel_itemcharge" name="parcel_itemcharge" value="2.0" type="text"
+                           tal:attributes="value view/values/parcel_itemcharge|nothing"/>
+                </div>
+            </div>
+            
+            <div class="field"
+                 tal:attributes="class python:'field'+(errors.has_key('parcel_mincharge') and ' error' or '')">
+
+                <label for="parcel_mincharge">
+                    Minimum Shipping Charge
+                </label>
+
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+
+                <div class="formHelp">
+                    Minimum charge for shipping.
+                </div>
+
+                <div tal:condition="python:errors.has_key('parcel_mincharge')"
+                     tal:content="errors/parcel_mincharge|nothing">
+                    The Error
+                </div>
+
+                <div class="widget">
+                    <input id="parcel_mincharge" name="parcel_mincharge" value="10.0" type="text"
+                           tal:attributes="value view/values/parcel_mincharge|nothing"/>
+                </div>
+            </div>
+            
+            <div class="field"
+                 tal:attributes="class python:'field'+(errors.has_key('parcel_maxcharge') and ' error' or '')">
+
+                <label for="parcel_maxcharge">
+                    Maximum Shipping Charge
+                </label>
+
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:domain="plone"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">
+                    (Required)
+                </span>
+
+                <div class="formHelp">
+                    Maximum charge for shipping.
+                </div>
+
+                <div tal:condition="python:errors.has_key('parcel_maxcharge')"
+                     tal:content="errors/parcel_maxcharge|nothing">
+                    The Error
+                </div>
+
+                <div class="widget">
+                    <input id="parcel_maxcharge" name="parcel_maxcharge" value="20.0" type="text"
+                           tal:attributes="value view/values/parcel_maxcharge|nothing"/>
+                </div>
+            </div>
+
+            <div id="actionsView" class="formControls">
+                <span class="actionButtons">
+                    <input name="pcommerce_save" value="Save" class="context" type="submit"
+                           i18n:domain="plone"
+                           i18n:attributes="value label_save" />
+                </span>
+            </div>
+
+        </form>
+
+  </div>
+
+</body>
+</html>
+

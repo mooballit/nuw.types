@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+        <h2>Worksite Agreements</h2>
+        <tal:dup repeat="file_dict view/get_files">
+            <div class="record">
+                <h3 class="nuw-subheader" tal:content="string:Agreements from ${file_dict/group/name}"></h3>
+                <div class="dates">
+                    <span class="startdate"><strong>Start Date:</strong> <tal:startdate replace="python:view.get_date(file_dict['record'].startdate)"></tal:startdate></span>
+                    <span class="enddate"><strong>End Date:</strong> <tal:enddate replace="python:view.get_date(file_dict['record'].enddate)"></tal:enddate></span>
+                </div>
+                <div class="notes"><strong>Notes:</strong> <tal:notes condition="file_dict/record/notes" replace="file_dict/record/notes"></tal:notes><tal:notes condition="not:file_dict/record/notes" replace="string:None"></tal:notes></div>
+                <ul class="files">
+                    <li class="row" tal:repeat="file file_dict/files">
+                        <i class="span1 arrow-icon right-dark-grey"></i>
+                        <span class="span4" tal:content="string:${file/name} (${file/path})"></span>
+                        <a class="span2" tal:attributes="href string:http://files.nuw.org.au/${file/fileid/upper}.${file/extension}" tal:content="string:Download ${file/extension/upper}"></a>
+                    </li>
+                </ul>
+            </div>
+        </tal:dup>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

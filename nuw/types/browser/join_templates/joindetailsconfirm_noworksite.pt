@@ -1,0 +1,23 @@
+From: info@nuw.org.au
+To: <tal:to-email tal:replace="options/to_email" />
+Subject: Join; Step 1 (No Agency/Worksite); <tal:name tal:replace="options/name" />
+Hi,
+
+A new member application has been completed by <tal:name tal:replace="options/name" /> with Employment Type <tal:employmenttype tal:replace="options/employmenttype" />.
+They have no existing worksite (and if applicable, no agency), no payment has been collected, and so this application needs to be finalised offline.
+<tal:whennamed tal:condition="options/other_worksite">
+    The applicant has entered their own worksite name: <tal:worksitename tal:replace="options/other_worksite" />
+</tal:whennamed>
+<tal:whennamed tal:condition="options/other_agency">
+    The applicant has entered their own agency name: <tal:worksitename tal:replace="options/other_agency" />
+</tal:whennamed>
+
+Name: <tal:name tal:replace="options/name" />
+Email: <tal:email tal:replace="options/email" />
+Phone: <tal:phone tal:replace="options/phone" />
+Mobile: <tal:mobile tal:replace="options/mobile" />
+
+Click here to view the member: <tal:memberlink tal:replace="string:${options/portal_url}/@@member-search?b_start_search:int=0&filter=personid&search=${options/personid}" />
+
+Best Regards,
+nuw.org.au

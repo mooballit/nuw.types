@@ -1,0 +1,12 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="pcommerce">
+
+  <browser:view
+      name="process"
+      provides="pcommerce.core.interfaces.IComponent"
+      class=".process.ProcessComponent"
+      permission="pcommerce.CheckOut"
+      />
+
+</configure>

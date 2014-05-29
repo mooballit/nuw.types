@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="file">
+  <data>
+    <file fileid="772B9246-3C09-E211-B6A4-005056A2000A" nuwdbid="" webadaptorid="772B9246-3C09-E211-B6A4-005056A2000A" nuwassistid="56634" path="Agreements\2011\FWA" name="11FWA-009" extension="pdf" type="Acrobat Document" sizebytes="1465901" recordid="762B9246-3C09-E211-B6A4-005056A2000A" filenumber="1" />
+  </data>
+</message>

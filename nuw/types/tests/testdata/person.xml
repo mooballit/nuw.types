@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwdb" userid="dbo" action="insert" entity="person">
+  <data>
+    <person nuwassistid="61911" nuwdbid="NV593855" rownumber="20001" webadaptorid="40942A20-ACE8-E011-90F7-005056A20027" personid="40942A20-ACE8-E011-90F7-005056A20027" type="Member" title="Mr" gender="Male" firstname="Jorge" preferredname="Jorge" lastname="Rodriguez" homeaddress1="39 Chancellor Drive" homesuburb="MULGRAVE" homestate="VIC" homepostcode="3170" postaddress1="39 Chancellor Drive" postsuburb="MULGRAVE" poststate="VIC" postpcode="3170" postrts="0" home="03 9561 3831" work="" fax="" status="Paying" dob="1955-07-29T00:00:00" employeeid="085" employmenttype="casual" />
+    <person nuwassistid="61920" nuwdbid="NV593948" rownumber="20002" personid="49942A20-ACE8-E011-90F7-005056A20027" type="Non-Union Worker" title="Mr" gender="Male" firstname="Stephen" preferredname="Stephen" lastname="Sayers" homeaddress1="P O Box 22" homesuburb="Wallan" homestate="VIC" homepostcode="3756" postaddress1="P O Box 22" postsuburb="Wallan" poststate="VIC" postpcode="3756" postrts="0" mobile="0438 332 409" home="03 5783 1149" work="" fax="" status="Paying" dob="1954-03-24T00:00:00" employeeid="SW140" employmenttype="permanent" />
+    <person nuwassistid="247638" nuwdbid="NV091431" rownumber="39226" personid="D416A0ED-8EDF-E111-A17C-005056A20027" type="Member" title="Mr" gender="Male" firstname="Sione" preferredname="Sione" lastname="Tukuafu" postrts="1" status="Paying" employmenttype="casual" />
+    <person nuwassistid="247639" nuwdbid="NV091432" rownumber="39227" personid="68EC3C14-8FDF-E111-A17C-005056A20027" type="Member" title="Mr" gender="Male" firstname="Siosifa" preferredname="Siosifa" lastname="Tukuafu" postrts="1" status="Paying" employmenttype="casual" />
+  </data>
+</message>

@@ -1,0 +1,144 @@
+<div class="wall" tal:attributes="data-wall-id view/get_wall_id">
+    <script type="text/javascript">
+        jQuery( function ( $ ) {
+            function postSlider( e ) {
+                if ( (e.type == 'mouseenter') || (e.type == 'touchstart') )
+                {
+                    if ( $( this ).find( '.subpost-form' ).css( 'display' ) == 'none' ) {
+                        $( this ).find( '.subpost-form' ).slideDown( 'fast' );
+                        if (e.type == 'touchstart')
+                            $( this ).parent().toggleClass('hovered');
+                    }
+                }
+                else
+                {
+                    if ( $( this ).find( '.subpost-form form' ).css( 'display' ) == 'none' )
+                        $( this ).find( '.subpost-form' ).slideUp( 'fast' );
+                }
+
+            }
+
+            // Handle hiding/showing of reply form
+            $( document ).on( 'hover touchstart', '.posts > .post > .post-body', postSlider ).on( 'click touchstart', '.form-show a', function ( e ) {
+                e.preventDefault();
+
+                $( this ).parent().hide();
+                $( this ).parent().parent().find( 'form' ).slideDown( 'fast' );
+            } ).on( 'click touchstart', '.subpost-form button[type=reset]', function () {
+                $( this ).parent().slideUp( 'fast', function () {
+                    $( this ).parent().hide().find( '.form-show' ).show();
+                } );
+            } ).on( 'touchstart', '.subpost-form textarea', function (e) {
+                $(this).focus();
+            } );
+
+            // Handle autoloading of posts
+            function load_posts () {
+                var bottom_post = $( '.posts>.post:last' ).attr( 'id' ), $pl = $( this );
+
+                if ( bottom_post )
+                {
+                    var bottom_post_id = /post-([0-9]+)/.exec( bottom_post )[1];
+
+                    $pl.html( '<i class="ajax-loader"></i> Loading posts...' );
+
+                    $.ajax( {
+                        url: '@@wallposts',
+                        data: {
+                            before: bottom_post_id,
+                            wall_id: $( '.wall' ).data( 'wallId' )
+                        },
+                        success: function ( data ) {
+                            if ( /\S/.exec( data ) )
+                            {
+                                $( data ).hide().insertBefore( $pl );
+                                $( '.post:hidden' ).slideDown();
+
+                                $pl.one( 'visible', load_posts );
+                                $( window ).scroll();
+                            }
+                            else
+                            {
+                                $pl.slideUp();
+                            }
+                        }
+                    } );
+                }
+                else
+                {
+                    $pl.slideUp();
+                }
+            }
+
+            $('.post-loader').one( 'visible', load_posts );
+            $( window ).scroll( function () {
+                var $pl = $( '.post-loader:visible' ), $w = $( window );
+
+                if ( $pl.length )
+                {
+                    var pos = $pl.offset(), h = $pl.outerHeight( true ), w = $pl.outerWidth( true );
+                    var wst = $w.scrollTop(), wsl = $w.scrollLeft();
+                    var wsb = wst + $w.innerHeight(), wsr = wsl + $w.innerWidth();
+
+                    if ( wst < pos.top && wsb > pos.top + h && wsl < pos.left && wsr > pos.left + w )
+                        $pl.trigger( 'visible' );
+                }
+            } ).scroll();
+            $( '.post-images h4' ).toggle( function () {
+                $( this ).removeClass( 'closed' ).addClass( 'open' ).parent().find( '.img-inputs' ).slideDown();
+            }, function () {
+                $( this ).removeClass( 'open' ).addClass( 'closed' ).parent().find( '.img-inputs' ).slideUp();
+            } )
+
+            // Handle send email inputs
+            $( '.email-checkbox input' ).each( function () {
+                var $this = $( this );
+                if ( $this.attr('checked') == 'checked' )
+                {
+                    // Form loaded with email checkbox already checked,
+                    // so email options should be expanded
+                    $this.parent().siblings( '.email-send-options' ).addClass( 'in' );
+                }
+            } );
+
+            // Handle private checkbox
+            $( '.private-checkbox input' ).change( function () {
+                var $this = $( this );
+                $this.parent().parent()
+                    .find( '.email-send-options input[type=checkbox]' )
+                        .attr( 'disabled', $this.attr('checked') == 'checked' )
+                        .parent().toggleClass( 'disabled', $this.attr('checked') == 'checked' );
+            } ).change();
+        } );
+    </script>
+    <div class="post-form" tal:condition="view/can_post">
+        <form method="post" enctype="multipart/form-data">
+            <div class="errors" tal:condition="view/post_errors">
+                <div class="error" tal:repeat="error view/post_errors" tal:content="error"></div>
+            </div>
+            <div>
+                <textarea name="post-body" placeholder="New Post..." tal:content="python:view.post_body if view.post_errors else ''"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn">Post<i class="arrow-icon right-white"></i></button>
+                <button type="reset" class="btn">Cancel</button>
+                <label class="private-checkbox" tal:condition="view/can_view_private">
+                    <input type="checkbox" name="private">Is private message
+                </label>
+                <div class="post-images">
+                    <h4 class="closed">Attach Images</h4>
+                    <div class="img-inputs">
+                        <input type="file" name="images:list" />
+                        <input type="file" name="images:list" />
+                        <input type="file" name="images:list" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="visualClear"></div>
+    </div>
+    <div class="posts">
+        <tal:posts tal:replace="structure view/renderposts" />
+        <div class="post-loader"></div>
+    </div>
+</div>

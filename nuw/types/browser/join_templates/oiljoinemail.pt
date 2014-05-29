@@ -1,0 +1,16 @@
+From: info@nuw.org.au
+To: <tal:to-email tal:replace="options/to_email" />
+Subject: Join; <tal:worksite tal:replace="options/worksitename" /> (Oil Industry); <tal:name tal:replace="options/name" />
+Hi,
+
+A new member application has been completed by <tal:name tal:replace="options/name" /> at <tal:worksite tal:replace="options/worksitename" />. As this is an Oil Industry site, no payment has been collected and this application needs to be finalised offline.
+
+Name: <tal:name tal:replace="options/name" />
+Email: <tal:email tal:replace="options/email" />
+Phone: <tal:phone tal:replace="options/phone" />
+Mobile: <tal:mobile tal:replace="options/mobile" />
+
+Click here to view the member: <tal:memberlink tal:replace="string:${options/portal_url}/@@member-search?b_start_search:int=0&filter=personid&search=${options/personid}" />
+
+Best Regards,
+nuw.org.au

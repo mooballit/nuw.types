@@ -1,0 +1,8 @@
+<div class="portlet quicklinks">
+<dl>
+    <dt>Quick Links</dt>
+    <tal:dup repeat="link view/data/get_links">
+        <a tal:attributes="href link/url" class="btn"><tal:stuff content="link/title">LINK</tal:stuff><i class='arrow-icon right-white pull-right'></a>
+    </tal:dup>
+</dl>
+</div>

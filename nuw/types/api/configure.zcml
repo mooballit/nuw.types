@@ -1,0 +1,32 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="nuw.types">
+
+  <adapter
+    provides="zope.container.interfaces.INameChooser"
+    for=".tool.ISyncAPITool"
+    factory="zope.container.contained.NameChooser"
+    />
+
+  <browser:page
+    name="api-settings.html"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    permission="cmf.ManagePortal"
+    class=".settings.APIToolControlView"
+    />
+
+  <adapter
+    factory="z3c.traverser.traverser.PluggableTraverser"
+    for="nuw.types.api.tool.ISyncAPITool
+         zope.publisher.interfaces.IPublisherRequest"
+    />
+
+  <subscriber
+    factory=".tool.MapperTraverser"
+    for="nuw.types.api.tool.ISyncAPITool
+         zope.publisher.interfaces.IPublisherRequest"
+    provides="z3c.traverser.interfaces.ITraverserPlugin"
+    />
+
+</configure>

@@ -1,0 +1,36 @@
+<div class="activationHeaderViewlet">
+    <h1 class="documentFirstHeading">Join NUW</h1>
+    <div class="description">Become an NUW member now and gain access to this site and other NUW services.</div>
+    <div class="row">
+        <div class="span4">
+            <div class="styledbox">
+                <div class="header">
+                    <i id="join-icon" class='social-icon button'></i>
+                    <label for="join-icon">Online</label>
+                </div>
+                <p class="discreet">If you would like ot join the NUW, complete our <a tal:attributes="href string:${context/portal_url}/membership/joinwizard.html">online form</a>.</p>
+                <a class="btn" tal:attributes="href string:${context/portal_url}/membership/joinwizard.html">Join Now<i class='arrow-icon right-white'></i></a>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="styledbox">
+                <div class="header">
+                    <i id="mail-icon" class='social-icon letter-empty'></i>
+                    <label for="mail-icon">Snail Mail</label>
+                </div>
+                <p class="discreet">You can <a href="/membership/download-join-form">download our Join Form</a>, complete it and post to us. Instructions will be on the form.</p>
+                <a class="btn" href="/membership/download-join-form">Download<i class='arrow-icon right-white'></i></a>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="styledbox">
+                <div class="header">
+                    <i id="phone-icon" class='social-icon phone'></i>
+                    <label for="phone-icon">Call Us</label>
+                </div>
+                <p class="discreet">You can join by calling us Monday to Friday 8:00am to 5:00pm EST on:</p>
+                <strong>Ph: <a href="tel:1300275689">1300 275 689</a></strong>
+            </div>
+        </div>
+    </div>
+</div>

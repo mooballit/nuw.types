@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+    <portlet
+        addview="nuw.portlets.quicklinks"
+        title="Quick Links Portlet"
+        description="Renders a list of links set within the portlet">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.signpetition"
+        title="Sign Petition Portlet"
+        description="Renders a form to sign the current in context petition">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.donation"
+        title="Donation Portlet"
+        description="Renders a form to alow users to donate to a campaign">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.subscribe"
+        title="Subscription Portlet"
+        description="Renders a form to alow users to subscribe to a campaign">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.socialshare"
+        title="Social Share Portlet"
+        description="Renders various methods to share page via social media">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.twitterfeed"
+        title="Campaign Twitter Feed Portlet"
+        description="Renders a twitter feed for a campaigns hashtag (if any)">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+    <portlet
+        addview="nuw.portlets.photogallery"
+        title="Campaign Photo Gallery Portlet"
+        description="Render 9 tiled images from the gallery folder under the campaign">
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+</portlets>

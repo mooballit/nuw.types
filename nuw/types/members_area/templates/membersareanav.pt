@@ -1,0 +1,9 @@
+<div class="members-area-nav">
+    <h3>My NUW Online</h3>
+    <ul class="nav nav-list">
+        <li tal:repeat="item viewlet/menu" tal:attributes="class python: item['id'] == viewlet.cur_item and 'active' or ''">
+            <a tal:attributes="href item/id" tal:content="item/Title"></a>
+        </li>
+        <li><a tal:attributes="href string:${context/portal_url}/logout"><strong>Logout</strong></a></li>
+    </ul>
+</div>

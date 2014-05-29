@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+    <metal:content-core fill-slot="content-core">
+        <tal:entry tal:repeat="item view/items">
+            <div class="campaign listed" tal:condition="python: (item.portal_type == 'nuw.types.campaign') or (item.portal_type == 'nuw.types.campaignlink')" tal:define="item_object item/getObject">
+                <a tal:attributes="href item/getURL">
+                    <img tal:condition="item_object/image" tal:define="scale item_object/@@images; thumb python: scale.scale('image', scale='mini')"
+                        tal:replace="structure thumb/tag|nothing" />
+                </a>
+                <div class="campaign-content">
+                    <a tal:attributes="href item/getURL">
+                        <h3 class="nuw-subheader" tal:content="item/Title"></h3>
+                    </a>
+                    <p tal:content="item/Description"></p>
+                </div>
+                <div class="visualClear"></div>
+            </div>
+        </tal:entry>
+    </metal:content-core>
+
+</body>
+</html>

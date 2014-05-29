@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="superrole">
+  <data>
+    <superrole nuwassistid="2214" nuwdbid="trelEmployee108" webadaptorid="29DDFCCB-78F2-E011-90F7-005056A20027" superroleid="29DDFCCB-78F2-E011-90F7-005056A20027" supergroupid="8887FEC5-EE00-E111-A628-005056A20027" personid="40942A20-ACE8-E011-90F7-005056A20027" superrole="Organiser" />
+    <superrole nuwassistid="2481" nuwdbid="trelEmployee13282" webadaptorid="F1BFDC8A-5E0E-E111-A628-005056A20027" superroleid="F1BFDC8A-5E0E-E111-A628-005056A20027" supergroupid="5F88FEC5-EE00-E111-A628-005056A20027" personid="13182820-ACE8-E011-90F7-005056A20027" superrole="Lead Organiser" />
+    <superrole nuwassistid="2482" nuwdbid="trelEmployee13283" webadaptorid="55C55893-5E0E-E111-A628-005056A20027" superroleid="55C55893-5E0E-E111-A628-005056A20027" supergroupid="5F88FEC5-EE00-E111-A628-005056A20027" personid="01D62C20-ACE8-E011-90F7-005056A20027" superrole="Organiser" />
+    <superrole nuwassistid="2522" nuwdbid="trelEmployee13324" webadaptorid="15A00D05-630E-E111-A628-005056A20027" superroleid="15A00D05-630E-E111-A628-005056A20027" supergroupid="5F88FEC5-EE00-E111-A628-005056A20027" personid="ABF32C20-ACE8-E011-90F7-005056A20027" superrole="Area Admin" />
+  </data>
+</message>

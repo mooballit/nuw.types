@@ -1,0 +1,59 @@
+<html>
+<head>
+<div tal:replace="structure provider:plone.htmlhead" />
+
+</head>
+<body class="email-share">
+    <h2>Email Share</h2>
+    <tal:isnotposted tal:condition="not:view/posted">
+    <p>Please enter at most 5 email addresses to share with...</p>
+    <form method="post" action="@@emailshare" class="form-horizontal">
+        <div class="row">
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Recipient 1" />
+            </div>
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Recipient 2" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Recipient 3" />
+            </div>
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Recipient 4" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Recipient 5" />
+            </div>
+        </div>
+        <p>Please enter your information:</p>
+        <div class="row">
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon button small"></i></span>
+                <input class="span3" name="sender_name" type="text" placeholder="Your Name" />
+            </div>
+            <div class="input-prepend span3">
+                <span class="add-on"><i class="social-icon email small"></i></span>
+                <input name="recipients:list" type="text" placeholder="Your Email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <button class="btn pull-right" type="submit">Share <i class='arrow-icon right-white'></i></button>
+            </div>
+        </div>
+    </form>
+    </tal:isnotposted>
+    <tal:isposted tal:condition="view/posted">
+    <p>Your page recommendation has been sent to the provided recipients.</p>
+    </tal:isposted>
+</body>
+</html>

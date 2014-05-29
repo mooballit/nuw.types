@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="nuw.types.install" version="1"
+               handler="nuw.types.setuphandlers.install"
+               title="Install PAS plugins">
+        <dependency step="collective.saconnect" />
+  </import-step>
+</import-steps>

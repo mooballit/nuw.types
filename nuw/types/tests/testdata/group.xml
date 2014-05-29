@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwdb" userid="dbo" action="insert" entity="group">
+  <data>
+    <group name="Westaff
+      " nuwassistid="9099" nuwdbid="CG00129"
+      groupid="AB40C0D7-52EB-E111-B6A4-005056A2000A" type="Union Site"
+      www="http://www.mooball.net"
+      />
+    <group name="Unallocated Potential Members" nuwassistid="8985" nuwdbid="NA00001" groupid="CF8BEBC5-EE00-E111-A628-005056A20027" type="Union Site" reception="" fax="" www="" abn="" />
+    <group name="test creating agency in nuwassist @ Unknown Site" nuwassistid="8993" nuwdbid="NA00002" groupid="E489EBC5-EE00-E111-A628-005056A20027" type="Union Site" reception="03 9287 1777" fax="03 9287 1717" www="www.lucrf.com.au" abn="1234567890123456" siteaddress1="LUCRF Building" siteaddress2="Level 3, 833 Bourke Street" sitesuburb="Docklands" sitestate="Vic" sitepcode="3008" />
+    <group name="DHL (SDA)" nuwassistid="7895" nuwdbid="NW64646" groupid="E988EBC5-EE00-E111-A628-005056A20027" type="Closed Site" />
+  </data>
+</message>

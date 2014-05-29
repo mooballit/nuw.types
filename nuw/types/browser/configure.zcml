@@ -1,0 +1,19 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="nuw.types">
+
+  <browser:page
+    for="nuw.types.interfaces.IJoinContext"
+    name="joinwizard.html"
+    permission="zope2.Public"
+    class=".join.JoinFormWizardView"
+    />
+    
+   <browser:resourceDirectory
+        name="nuw.types.js"
+        directory="js"
+        />
+
+  <adapter factory=".join.AutoWizardWidgetTraversal" name="widget" />
+</configure>

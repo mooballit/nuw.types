@@ -1,0 +1,12 @@
+<div class="activationGuideViewlet"
+        tal:define="title viewlet/step_title; description viewlet/step_description"
+        tal:condition="title">
+    <h4 class="title">Already an NUW member?</h4>
+    <p class="discreet">
+        For existing NUW members. Use this form to retrieve your login/password details or to activate your login if you have not already done so.
+    </p>
+    <div class="currentStep">
+        <h6 class="stepTitle" tal:content="title"></h6>
+        <p class="discreet" tal:content="description"></p>
+    </div>
+</div>

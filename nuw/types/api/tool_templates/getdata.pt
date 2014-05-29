@@ -1,0 +1,10 @@
+<message
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:attributes="entity view/entity"
+  >
+  <data>
+    <tag tal:define="iter view/get_data_iterator"
+      tal:repeat="obj iter/all"
+      tal:replace="structure obj/@@xml" />
+  </data>
+</message>

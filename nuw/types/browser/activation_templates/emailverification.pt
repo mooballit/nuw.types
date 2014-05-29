@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main define-macro="main"
+        tal:define="person context/table">
+        <h1 tal:content="view/label">Please check your mailbox</h1>
+        <p>
+          In order to verify your email, we have send a confirmation
+          email to: <strong tal:content="person/email" />.
+        </p>
+        <p>
+          Please click on the link included in the confirmation email.
+        </p>
+      </metal:main>
+    </metal:main>
+
+  </body>
+</html>

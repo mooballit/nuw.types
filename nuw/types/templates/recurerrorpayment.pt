@@ -1,0 +1,22 @@
+From: info@nuw.org.au
+To: <tal:to-email tal:replace="options/to_email" />
+Subject: Member Fees; Error; <tal:name tal:replace="options/name" />
+Hi,
+
+A membership payment has just failed from the automatic payment system.
+Please find their details below:
+
+Name: <tal:name tal:replace="options/name" />
+Email: <tal:email tal:replace="options/email" />
+Frequency: <tal:frequency tal:replace="options/frequency" />
+Amount: $<tal:frequency tal:replace="options/amount" />
+
+The payment gateway returned these errors (Separated by | 'pipe'):
+<tal:errors tal:replace="options/errors" />
+
+Click here to view the member: <tal:memberlink tal:replace="string:${options/portal_url}/@@member-search?b_start_search:int=0&filter=personid&search=${options/personid}" />
+
+Click here to see the recurring payment in question: <tal:recurlink tal:replace="string:${options/portal_url}/@@recurring-payments?b_start_recur:int=0&filter=id&search=${options/recurid}" />
+
+Best Regards,
+nuw.org.au

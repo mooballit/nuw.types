@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  elementFormDefault="qualified"
+  tal:define="dummy python:request.response.setHeader('Content-Type', 'application/xml;; encoding=utf-8');
+  info view/get_info">
+  <xs:element name="message">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="data"/>
+      </xs:sequence>
+      <xs:attribute name="systemid"/>
+      <xs:attribute name="action" use="required"/>
+      <xs:attribute name="entity"/>
+      <xs:attribute name="userid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element maxOccurs="unbounded"
+          tal:repeat="typename info"
+          tal:attributes="ref typename" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element tal:repeat="typename info/keys" tal:attributes="name typename">
+    <xs:complexType>
+      <xs:attribute name="rownumber"/>
+      <tal:fields 
+        tal:define="iface python:info[typename];
+        fields python:view.get_fields_for(iface);"
+        repeat="field fields/values">
+        <xs:attribute 
+          tal:attributes="name field/__name__; use python:'required' if field.required else None"
+          tal:condition="not:field/readonly"
+          name="hubid" use="required"/>
+      </tal:fields>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

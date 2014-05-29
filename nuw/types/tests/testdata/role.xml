@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="role">
+  <data>
+    <role nuwassistid="2001215" nuwdbid="NC00042NC000063" roleid="219E3F23-ACE8-E011-90F7-005056A20027" personid="40942A20-ACE8-E011-90F7-005056A20027" groupid="AB40C0D7-52EB-E111-B6A4-005056A2000A" role="Employee" startdate="1991-05-20T00:00:00"/>
+    <role nuwassistid="2001224" nuwdbid="CAT002413" roleid="269E3F23-ACE8-E011-90F7-005056A20027" personid="NC000075" groupid="NC00042" role="Delegate" startdate="2004-09-13T00:00:00" enddate="2005-08-31T00:00:00"/>
+  </data>
+</message>

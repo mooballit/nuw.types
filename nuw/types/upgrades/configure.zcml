@@ -1,0 +1,82 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="bd.skin">
+
+    <genericsetup:upgradeSteps
+      source="0.1"
+      destination="2"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="Renaming of table names"
+        description="tablenames migration"
+        handler=".v2.upgrade_01_to_2"
+        />
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+      source="2"
+      destination="201"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="Rename member table to user and rename auth plugin"
+        description="tablenames migration and re-adding pas plugin"
+        handler=".v2.upgrade_2_to_201"
+        />
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+      source="202"
+      destination="203"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="'file' columns rename/type changes"
+        description="Drops/creates 'sizebytes' column as integer. Renames 'filename' column to 'name'."
+        handler=".v2.upgrade_201_to_203"
+        />
+      <genericsetup:upgradeStep
+        title="'file' column rename"
+        description="Renames 'filename' column to 'name' on file table."
+        handler=".v2.upgrade_201_to_203_column_rename"
+        />
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+      source="203"
+      destination="204"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="'Post' add columns for private posts"
+        description="Adds the private boolean column to allow private posts."
+        handler=".v2.upgrade_203_to_204"
+        />
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+      source="204"
+      destination="205"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="'Person' language field modifications"
+        description="Adds 2 new fields, removes 1 and renames 1 field."
+        handler=".v2.upgrade_204_to_205"
+        />
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+      source="205"
+      destination="206"
+      profile="nuw.types:default">
+
+      <genericsetup:upgradeStep
+        title="Alter languagetranslate for API"
+        description="Change languagetranslate to languagetranslator."
+        handler=".v2.upgrade_205_to_206"
+        />
+    </genericsetup:upgradeSteps>
+</configure>

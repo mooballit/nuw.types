@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      tal:omit-tag="">
+
+<input
+   id="agency_name" type="text" name="" class="text-widget textline-field"
+   tabindex="" disabled="" readonly="" accesskey="" placeholder="Type to search for your agency"
+   style="width: 22em;"
+   tal:attributes="name view/name;
+                   class view/klass;
+                   style view/style;
+                   title view/title;
+                   lang view/lang;
+                   onclick view/onclick;
+                   ondblclick view/ondblclick;
+                   onmousedown view/onmousedown;
+                   onmouseup view/onmouseup;
+                   onmouseover view/onmouseover;
+                   onmousemove view/onmousemove;
+                   onmouseout view/onmouseout;
+                   onkeypress view/onkeypress;
+                   onkeydown view/onkeydown;
+                   onkeyup view/onkeyup;
+                   disabled view/disabled;
+                   tabindex view/tabindex;
+                   onfocus view/onfocus;
+                   onblur view/onblur;
+                   onchange view/onchange;
+                   readonly view/readonly;
+                   accesskey view/accesskey;
+                   onselect view/onselect;
+                   value view/value"
+ /> &nbsp;<a href="" id="agency-clear">clear</a>
+
+<script type="text/javascript">
+    $(function() {
+        $('#agency_name').autocomplete({
+            serviceUrl: '@@worksites.json?token=agency',
+            onSelect: function (suggestion) {
+                $('#workinformation-widgets-agency').val(suggestion.data);
+                console.log($('#workinformation-widgets-agency').val());
+            }
+        });
+
+        $('#agency-clear').click(function(ev) {
+            ev.preventDefault();
+            $('#agency_name').val('');
+            $('#workinformation-widgets-agency').val('');
+            return false;
+        });
+    });
+</script>
+
+</html>

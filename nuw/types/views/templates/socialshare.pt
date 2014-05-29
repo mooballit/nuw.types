@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+        <div class="social-share">
+            <tal:hasnotposted tal:condition="not:view/status">
+            <form method="post">
+                <label>
+                    <input type="checkbox" name="enable-facebook-post" checked="checked" />Facebook Post
+                    <textarea name="facebook-post" tal:content="view/facebook_post"></textarea>
+                </label>
+                <p>Following link will also be sent along with facebook post:<br /><span tal:replace="context/absolute_url" /></p>
+                <label>
+                    <input type="checkbox" name="enable-twitter-post" checked="checked" />Twitter Post
+                    <textarea name="twitter-post" tal:content="view/twitter_post"></textarea>
+                </label>
+                <button class="btn" type="submit">Post</button>
+            </form>
+            </tal:hasnotposted>
+            <tal:hasposted tal:condition="view/status">
+                <p tal:content="view/status"></p>
+            </tal:hasposted>
+        </div>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

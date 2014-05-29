@@ -1,0 +1,147 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main define-macro="main"
+        tal:define="person view/get_person; errors view/errors;">
+        <h1 class="documentFirstHeading">Join NUW</h1>
+        
+        <strong class="error" tal:condition="not:person">
+            Wrong or non-existing personid provided. This error should not happen.
+        </strong>
+        
+        <div class="description">Become an NUW member now and gain access to this site and other NUW services.</div>
+        <div class="description">Choose a payment option for your membership fees to NUW. Once your payment has been processed your application is complete. You will then be emailed an activation link to <strong tal:content="person/email">email@email.com</strong> to update your website password and activate your website login.</div>
+
+        <div class="controlgroup field error" tal:condition="errors">
+            <ul>
+                <li tal:repeat="msg python:errors.values()" tal:content="msg" />
+            </ul>
+        </div>
+
+        <h2>Payment Information</h2>
+        <form class="rowlike"
+                action="https://spreedlycore.com/v1/payment_methods"
+                method="POST"
+                tal:condition="person">
+            <fieldset>
+                <input name="redirect_url" type="hidden"
+                        tal:attributes="value string:${context/@@join_payment.html/@@absolute_url}?nuw.types.uuid=${request/nuw.types.uuid}" />
+                <input name="api_login" type="hidden" tal:attributes="value view/api_login" />
+
+                <tal:fields tal:repeat="f view/get_personal_info">
+                    <input name="credit_card[email]" type="hidden" tal:attributes="name f/name; value f/value" />
+                </tal:fields>
+                <input name="credit_card[country]" type="hidden" value="Australia" />
+
+                <div id="frequency" class="controlgroup field">
+                    <div id="fees" class="field">
+                        <label class="horizontal">
+                            Fees
+                        </label>
+                        <span class="fee">
+                            <span class="price">$12.50</span>/<span class="frequency">week</span>
+                        </span>
+                    </div>
+
+                    <div id="frequency-label" class="field">
+                        <label class="horizontal" for="payment_frequency">
+                            Frequency
+                            <span class="fieldRequired"
+                                    title="Required">
+                                (Required)
+                            </span>
+                        </label>
+
+                        <select id="payment_frequency" name="data[frequency]">
+                            <tal:dup repeat="freq view/get_payment_frequencies">
+                                <option tal:attributes="value python:freq[0]; id python:freq[1]" tal:content="python:freq[2]">Frequency</option>
+                            </tal:dup>
+                        </select>
+                    </div>
+                </div>
+
+                <label class="details-header">Credit Card Details</label>
+
+                <div id="card_number" class="controlgroup field">
+                    <div class="field">
+                        <label class="horizontal" for="credit_card_number">
+                            Card Number
+                            <span class="label label-important">Required</span>
+                        </label>
+                        <input id="credit_card_number"
+                                class="text-widget"
+                                name="credit_card[number]"
+                                type="text"
+                                tal:attributes="value nothing" />
+                        <img tal:attributes="src string:${context/absolute_url}/++theme++nuw.theme/images/titan-visa-master-sprites.png" />
+                    </div>
+                </div>
+
+                <div id="card_details" class="controlgroup field">
+                    <div class="field expiry">
+                        <label class="horizontal" for="credit_card_month">
+                            Expiry Date
+                            <span class="label label-important">Required</span>
+                        </label>
+                        <div class="widget">
+                            <select id="credit_card_month"
+                                    class="required" name="credit_card[month]">
+                                <option selected="selected" value="null">Month</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <select id="credit_card_year" class="select-widget" name="credit_card[year]">
+                                <option selected="selected" value="null">Year</option>
+                                <option tal:repeat="year view/valid_years" tal:attributes="value year" tal:content="year"></option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="field cvc">
+                        <label class="horizontal" for="credit_card_verification_value">CVC</label>
+                        <input id="credit_card_verification_value" name="credit_card[verification_value]" type="text" />
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="controlgroup submit-button">
+                <div class="controls">
+                    <input type="submit" value="Pay" class="btn" />
+                </div>
+            </div>
+        </form>
+        <script>
+            $(function() {
+                var fee = $('select#payment_frequency').get(0).options[0].id.split('-');
+                $('#fees span.price').text('$' + parseFloat(fee[0]).toFixed(2));
+                $('#fees span.frequency').text(fee[1]);
+
+                $('#payment_frequency').live('change', function(e) {
+                    var fee = e.currentTarget.options[e.currentTarget.selectedIndex].id.split('-');
+                    $('#fees span.price').text('$' + parseFloat(fee[0]).toFixed(2));
+                    $('#fees span.frequency').text(fee[1]);
+                });
+            });
+        </script>
+      </metal:main>
+    </metal:main>
+
+  </body>
+</html>

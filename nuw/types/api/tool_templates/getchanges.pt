@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<changes
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="changes view/get_changeitems">
+  <change tal:repeat="change changes" tal:replace="structure change/@@index" />
+</changes>

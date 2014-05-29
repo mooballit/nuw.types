@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwassist" userid="dbo" action="insert" entity="grouprole">
+  <data>
+    <grouprole nuwassistid="7774092" nuwdbid="NV01094CG00130   " webadaptorid="47F2F0CB-78F2-E011-90F7-005056A20027" rownumber="83" grouproleid="47F2F0CB-78F2-E011-90F7-005056A20027" groupid="AB40C0D7-52EB-E111-B6A4-005056A2000A" supergroupid="8887FEC5-EE00-E111-A628-005056A20027" grouprole="Child Site" />
+  </data>
+</message>

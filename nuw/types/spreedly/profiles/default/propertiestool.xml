@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_properties">
+  <object name="pcommerce_properties">
+    <property name="parcel_pretaxcharge" type="float" purge="False">0</property>
+    <property name="parcel_posttaxcharge" type="float" purge="False">0</property>
+    <property name="parcel_itemcharge" type="float" purge="False">2.0</property>
+    <property name="parcel_mincharge" type="float" purge="False">10.0</property>
+    <property name="parcel_maxcharge" type="float" purge="False">20.0</property>
+  </object>
+</object>

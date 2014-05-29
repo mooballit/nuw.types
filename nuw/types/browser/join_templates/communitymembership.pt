@@ -1,0 +1,414 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:main define-macro="main"
+        tal:define="errors view/errors;">
+
+<div class="wrapper wrapper-style2">
+<section id="benefits">
+    <div class="row-fluid">
+        <div class="span8">
+            <article>
+            <header>
+            <h1 class="documentFirstHeading">Benefits of Joining</h1>
+            <h3>You can become a community member of the National
+            Union of Workers and be an active participant in our
+            campaign for <i>Jobs you can count on!</i></h3>
+        </header>
+            <p>The NUW campaigns strongly in workplaces. The Union also aims to drive
+            progressive political and community change for all working people.
+            Secure, sustainable jobs with dignity come from organising through all these
+            networks – and you can help set a new agenda, one that is about people
+            and not just profit.
+            </p>
+            </article>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="/++theme++nuwcommunity.theme/img/commitment.png"/><br/>
+            <p>
+                Becoming a NUW community member means that you can help build and
+                have a say in our campaign – <em>Jobs you can count on</em> – which is a whole-of-Union and community–based campaign.
+            </p>
+            <ul class="greenList">
+                <li><strong>HAVE YOUR SAY in NUW</strong>
+                policy proposals and community actions</li>
+                <li><strong>GET ACTIVE</strong> with Union training and community organising</li>
+                <li><strong>SEEK HELP</strong> in looking for work in NUW industries</li>
+                <li class="last-item"><strong>LEARN MORE</strong> about NUW industrial campaigns</li>
+            </ul>
+        </div>
+        <div class="span4">
+            <img src="/++theme++nuwcommunity.theme/img/yourcommitment.png"/><br/>
+            <p>
+                Being an NUW community member
+                means that you support the Union
+                values of:
+                <strong>EQUALITY - DIGNITY - RESPECT</strong>
+                for all workers.
+            </p>
+            <h2 class="greenHeader">UNITY IS STRENGTH</h2>
+            <p>
+                As a community member, you support
+                NUW industrial members in their
+                campaigns to improve their say in
+                their workplaces.<br/><br/>
+                Whilst having access to NUW resources
+                to help you campaign in your own
+                community, you will also contribute
+                community dues of <strong>$1 per week or
+                $50 per annum</strong>, which will help the
+                NUW community program grow.
+            </p>
+
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span2">&nbsp;</div>
+        <div class="span4">
+            <div class="call-to-action">
+                <span>Join using the form below</span>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<div class="wrapper wrapper-style3">
+<section id="join">
+
+<div class="row-fluid">
+    <div class="span1">&nbsp;</div>
+    <div class="span8">
+    <h1 class="greenHeader">Community Membership Form</h1>
+</div>
+</div>
+
+<div class="controlgroup field error" tal:condition="errors">
+    <ul>
+        <li tal:repeat="msg python:errors.values()" tal:content="msg" />
+    </ul>
+</div>
+
+<div class="row-fluid">
+    <div class="span1">&nbsp;</div>
+    <div class="span8">
+    <form id="community-membership" class="rowlike"
+            action="https://spreedlycore.com/v1/payment_methods"
+            method="POST">
+        <h2 class="join">Personal Information</h2>
+
+        <input name="redirect_url" type="hidden"
+                tal:attributes="value string:${context/@@community_join.html/@@absolute_url}" />
+        <input name="api_login" type="hidden" tal:attributes="value view/api_login" />
+
+        <input name="credit_card[country]" type="hidden" value="Australia" />
+
+        <div class="row-fluid">
+                <div class="span4 firstname">
+                    <label>
+                        First name
+                    <span class="label label-important">Required</span>
+                    </label>
+                    <input type="text" id="firstname" name="credit_card[first_name]"/>
+                </div>
+
+                <div class="span4 lastname">
+                    <label>Last name
+                    <span class="label label-important">Required</span></label>
+                    <input type="text" id="lastname" name="credit_card[last_name]"/>
+                </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span3 gender">
+                <label>Gender
+                </label>
+                <select name="data[gender]" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="span5 dob">
+                <label>Date of Birth
+                    <span class="label label-important">Required</span></label><br/>
+                    <select style="width: 20%" name="data[dob_day]">
+                    <option>Day</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select> &nbsp;
+                    <select style="width: 30%" name="data[dob_month]">
+                    <option>Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select> &nbsp;
+                <input style="width: 20%" type="text" id="dob-year" name="data[dob_year]"/>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span8 address">
+                <label>Address
+                    <span class="label label-important">Required</span></label>
+                <input type="text" id="address" name="credit_card[address1]"/>
+            </div>
+        </div>
+
+
+        <div class="row-fluid">
+            <div class="span4 suburb">
+                <label>Suburb</label>
+                <input type="text" id="suburb" name="credit_card[city]"/>
+            </div>
+
+            <div class="span2 state">
+                <label class="horizontal">State</label>
+                <select name="credit_card[state]">
+                    <option value="NSW">NSW</option>
+                    <option value="ACT">ACT</option>
+                    <option value="QLD">QLD</option>
+                    <option value="VIC">VIC</option>
+                    <option value="SA">SA</option>
+                    <option value="NT">NT</option>
+                    <option value="WA">WA</option>
+                </select>
+            </div>
+
+            <div class="span2 postcode">
+                <label class="horizontal">Postcode</label>
+                <input type="text" id="postcode" name="credit_card[zip]"/>
+            </div>
+
+        </div>
+
+        <div class="row-fluid">
+            <div class="span8 email">
+                <label class="horizontal">Email
+                    <span class="label label-important">Required</span></label>
+                <input type="text" id="email" name="credit_card[email]"/>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span4 hometel">
+                <label class="horizontal">Telephone
+                    <span class="label label-important">Required</span></label>
+                <input type="text" id="hometel" name="credit_card[phone_number]"/>
+            </div>
+
+            <div class="span4 mobile">
+                <label class="horizontal">Mobile</label>
+                <input type="text" id="mobile" name="data[mobile]"/>
+            </div>
+        </div>
+
+        <h2 class="join">Payment</h2>
+
+        <div id="frequency" class="row-fluid">
+
+            <div id="frequency-label" class="span3">
+                <label for="payment_frequency">
+                    Frequency
+                </label>
+
+                <select id="payment_frequency" name="data[frequency]">
+                    <tal:dup repeat="freq view/get_payment_frequencies">
+                        <option tal:attributes="value python:freq[0]; id python:freq[1]" tal:content="python:freq[2]">Frequency</option>
+                    </tal:dup>
+                </select>
+            </div>
+
+            <div id="fees" class="span5">
+                <label>Fees</label><br/>
+                <span class="fee">
+                    <span class="price">$12.50</span>/<span class="frequency">week</span>
+                </span>
+            </div>
+        </div>
+
+        <div id="card_number" class="row-fluid">
+            <div class="span9">
+                <label for="credit_card_number">
+                    Card Number
+                    <span class="label label-important">Required</span>
+                </label>
+                <input id="credit_card_number"
+                        class="text-widget"
+                        name="credit_card[number]"
+                        type="text"
+                        tal:attributes="value nothing"
+                        style="width: 80%" />&nbsp;
+                <img tal:attributes="src string:${context/absolute_url}/++theme++nuw.theme/images/titan-visa-master-sprites.png" />
+            </div>
+        </div>
+
+        <div id="card_details" class="row-fluid">
+            <div class="span4 expiry">
+                <label class="horizontal" for="credit_card_month">
+                    Expiry Date
+                    <span class="label label-important">Required</span>
+                </label>
+                <div class="widget">
+                    <select id="credit_card_month"
+                            class="required" name="credit_card[month]"
+                            style="width: 50%">
+                        <option selected="selected" value="null">Month</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select> &nbsp;
+                    <select id="credit_card_year" class="select-widget" name="credit_card[year]"
+                            style="width: 40%">
+                        <option selected="selected" value="null">Year</option>
+                        <option tal:repeat="year view/valid_years" tal:attributes="value year" tal:content="year"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="span4 cvc">
+                <label class="horizontal" for="credit_card_verification_value">
+                    CVC
+                    <span class="label label-important">Required</span>
+                </label>
+                <input id="credit_card_verification_value" name="credit_card[verification_value]" type="text" />
+            </div>
+        </div>
+
+        <div class="submit" class="row-fluid">
+            <div class="span6">&nbsp;</div>
+            <div class="span2">
+                <a href="#" id="submit-button" class="button join-button">Join</a>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+</section>
+</div>
+
+<div class="wrapper wrapper-style4">
+<section id="footer">
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="/++theme++nuwcommunity.theme/img/jointheconvo.png"/>
+            <ul class="social-links">
+                <li class="facebook"><a href="http://facebook.com/NatUnionWorkers">facebook.com/NatUnionWorkers</a></li>
+                <li class="twitter"><a href="https://twitter.com/NatUnionWorkers">@NatunionWorkers</a></li>
+                <li class="web"><a href="http://www.jobsyoucancounton.com.au">jobsyoucancounton.com.au</a></li>
+            </ul>
+        </div>
+        <div class="span4">
+            <div class="row-fluid">
+                <img style="float: right" src="/++theme++nuwcommunity.theme/img/greenlogo.png"/>
+            </div>
+            <div style="margin-top: 50px" class="row-fluid">
+                <img style="float: right" src="/++theme++nuwcommunity.theme/img/jobsfooter.png"/>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+
+
+        <script>
+            $(function() {
+                $('#submit-button').click(function(e) {
+                    e.preventDefault();
+                    $('#community-membership').submit();
+                    return false;
+                });
+
+                var fee = $('select#payment_frequency').get(0).options[0].id.split('-');
+                $('#fees span.price').text('$' + parseFloat(fee[0]).toFixed(2));
+                $('#fees span.frequency').text(fee[1]);
+
+                $('#payment_frequency').live('change', function(e) {
+                    var fee = e.currentTarget.options[e.currentTarget.selectedIndex].id.split('-');
+                    $('#fees span.price').text('$' + parseFloat(fee[0]).toFixed(2));
+                    $('#fees span.frequency').text(fee[1]);
+                });
+
+                var hashTagActive = "";
+                $(".scroll").click(function (event) {
+                    if(hashTagActive != this.hash) { //this will prevent if the user click several times the same link to freeze the scroll.
+                        event.preventDefault();
+                        //calculate destination place
+                        var dest = 0;
+                        if ($(this.hash).offset().top > $(document).height() - $(window).height()) {
+                            dest = $(document).height() - $(window).height();
+                        } else {
+                            dest = $(this.hash).offset().top;
+                        }
+                        //go to destination
+                        $('html,body').animate({
+                            scrollTop: dest
+                        }, 2000, 'swing');
+                        hashTagActive = this.hash;
+                    }
+                })
+            });
+        </script>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

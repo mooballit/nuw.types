@@ -1,0 +1,222 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+<metal:main fill-slot="main">
+    <metal:main define-macro="main">
+        <div id="message"></div>
+        <h2>Payment Methods</h2>
+        <p class="documentDescription">
+            Here you can manage any credit card payment methods that you may have registered with us.
+            If you add a card then it can be used for donations, purchases and union fees.
+            You can add multiple credit cards and specify which is your preferred default card for payments.
+        </p>
+
+        <p class="documentDescription">
+            Note that this website uses SSL security and all information is transmitted and
+            stored securely in full compliance with Processing Card Industry Data Security Standards (PCIDSS)
+        </p>
+        
+        <div id="payment_methods" class="payment_methods" tal:define="payment_methods view/get_methods" tal:condition="payment_methods">
+            <h3 class="nuw-subheader">Current payment methods</h3>
+            <tal:dup tal:define="date view/get_date" repeat="methods payment_methods">
+                <div tal:attributes="class string:row; id methods/token">
+                    <div class="span3">
+                        <div class="dummy_card">
+                            <div id="name" tal:content="string:${methods/first_name} ${methods/last_name}"></div>
+                            <div id="number" tal:content="methods/number">XXXX XXXX XXXX 1234</div>
+                            <div id="expiry"><span tal:content="methods/month">6</span><span>/</span><span tal:content="methods/year">2012</span></div>
+                            <img id="card_logo" tal:condition="python:methods.card_type == 'visa'" tal:attributes="class string:visa" />
+                            <img id="card_logo" tal:condition="python:methods.card_type == 'master'" tal:attributes="class string:master" />
+                        </div>
+                    </div>
+                    <div class="span2">
+                        <div id="name">
+                              <span tal:condition="methods/first_name" tal:content="methods/first_name">Kenny</span> 
+                              <span tal:condition="methods/last_name" tal:content="methods/last_name">Powers</span>
+                        </div>
+                        <div id="address1" tal:condition="methods/address1" tal:content="methods/address1">123 Sesame St</div>
+                        <div id="address2" tal:condition="methods/address2" tal:content="methods/address2"></div>
+                        <div id="city_state_zip">
+                            <span tal:condition="methods/city" tal:content="methods/city">Brisbane</span> 
+                            <span tal:condition="methods/state" tal:content="methods/state">Qld</span>
+                            <span tal:condition="methods/zip" tal:content="methods/zip">4175</span> 
+                        </div>
+                        <span class="label" tal:condition="methods/defaulted">Default Card</span>
+                        
+                        <a tal:condition="not:methods/defaulted" tal:attributes="class string:card-link; href string:#; id string:set_as_default-${methods/token}">Set as Default</a>
+                        <a tal:condition="not:methods/defaulted" tal:attributes="class string:card-link; href string:#; id string:delete_token-${methods/token}">Delete</a>
+                    </div>
+                    <div class="span2" tal:condition="python:date.year >= methods.year and date.month > methods.month">
+                        <span class="label expired"> Card has Expired!</span>
+                    </div>
+                </div>
+                <br>
+            </tal:dup>
+        </div>
+        <script type="text/javascript">
+            function ajax_send( token_string )
+            {
+                var data = {};
+                data[token_string.split('-')[0]] = token_string.split('-')[1];
+                // Add a bit of cache busting
+                var date = new Date();
+                data['time'] = date.getTime();
+                
+                $.ajax( {
+                    url: 'update_card',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function ( data ) {
+                        var $errorMessage = $( '#message' );
+                        if ( data.status != 'ok' )
+                        {
+                            $errorMessage.html( '<strong>Error</strong> '+data.except );
+                        }
+                        else
+                        {
+                            reload_section( '#payment_methods' );
+                            $errorMessage.html( '<strong>Info</strong> Card has been '+data.method);
+                        }
+                        $errorMessage.addClass('alert');
+                        setTimeout(function(){$( '#message' ).html( '' );$( '#message' ).removeClass('alert');}, 3000)
+                    }
+                } );
+            }
+
+            function reload_section( section_id )
+            {
+                $( section_id ).load( 'payment-methods #' + section_id );
+            }
+                
+            $( function () {
+                $( '#payment_methods .card-link' ).live( 'click', function ( e ) {
+                    e.preventDefault();
+                    
+                    ajax_send( e.currentTarget.id );
+                } );
+            });
+        </script>
+        <h3 class="nuw-subheader">Add a payment method</h3>
+        <form class="form-horizontal payment-form" action="https://spreedlycore.com/v1/payment_methods" method="POST" tal:define="errors view/errors">
+            <input name="redirect_url" type="hidden" tal:attributes="value view/redirect" />
+            <input name="api_login" type="hidden" tal:attributes="value view/api_login" />
+
+            <input name="credit_card[email]" type="hidden" tal:attributes="value view/person/email" />
+            <input name="credit_card[address1]" type="hidden" tal:attributes="value view/person/postaddress1" />
+            <input name="credit_card[address2]" type="hidden" tal:attributes="value view/person/postaddress2" />
+            <input name="credit_card[city]" type="hidden" tal:attributes="value view/person/postsuburb" />
+            <input name="credit_card[state]" type="hidden" tal:attributes="value view/person/poststate" />
+            <input name="credit_card[zip]" type="hidden" tal:attributes="value view/person/postpcode" />
+            <input name="credit_card[country]" type="hidden" value="Australia" />
+            <input name="credit_card[phone_number]" type="hidden" tal:attributes="value view/get_phone" />
+
+            <div tal:attributes="class python:'field controlgroup'+(errors.has_key('first_name') and ' error' or '')">
+                <div tal:condition="python:errors.has_key('first_name')"
+                     tal:content="python:errors['first_name'] or None">
+                    The Error
+                </div>
+                <label class="control-label" for="credit_card_first_name">First name</label>
+                <div class="controls">
+                    <input placeholder="J." id="credit_card_first_name" name="credit_card[first_name]" type="text" tal:attributes="value view/person/firstname|nothing" />
+                </div>
+            </div>
+
+            <div tal:attributes="class python:'field controlgroup'+(errors.has_key('last_name') and ' error' or '')">
+                <div tal:condition="python:errors.has_key('last_name')"
+                     tal:content="python:errors['last_name'] or None">
+                    The Error
+                </div>
+                <label class="control-label" for="credit_card_last_name">Last name</label>
+                <div class="controls">
+                    <input placeholder="Smith" id="credit_card_last_name" name="credit_card[last_name]" type="text" tal:attributes="value view/person/lastname|nothing" />
+                </div>
+            </div>
+
+            <div tal:attributes="class python:'controlgroup field'+(errors.has_key('number') and ' error' or '')">
+                <div tal:condition="python:errors.has_key('number')"
+                     tal:content="python:errors['number'] or None">
+                    The Error
+                </div>
+                <label class="control-label" for="credit_card_number">Card Number</label>
+                <div class="controls">
+                    <input id="credit_card_number" name="credit_card[number]" type="text" tal:attributes="value nothing" />
+                    <img tal:attributes="src string:${context/absolute_url}/++theme++nuw.theme/images/titan-visa-master-sprites.png" />
+                </div>
+            </div>
+            
+            <div tal:attributes="class python:'field'+((errors.has_key('year') or errors.has_key('month')) and ' error' or '')">
+                <div tal:condition="python:errors.has_key('year')"
+                     tal:content="python:errors['year'] or None">
+                    The Error
+                </div>
+                <div tal:condition="python:errors.has_key('month')"
+                     tal:content="python:errors['month'] or None">
+                    The Error
+                </div>
+                <label class="control-label" for="credit_card_month">Expiry Date</label>
+                
+                <div class="controls">
+                    <select id="credit_card_month" class="input-small" name="credit_card[month]">
+                        <option selected="selected" value="null">Month</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select id="credit_card_year" class="input-small" name="credit_card[year]">
+                        <option selected="selected" value="null">Year</option>
+                        <option tal:repeat="year view/valid_years" tal:attributes="value year" tal:content="year"></option>
+                    </select>
+                    <span class="cvc_label">CVC</span>
+                    <input id="credit_card_verification_value" name="credit_card[verification_value]" type="text" />
+                </div>
+            </div>
+            
+            <div class="controlgroup">
+                <div class="controls">
+                    <input type="submit" value="Save" class="btn" />
+                </div>
+            </div>
+        </form>
+        <div id="transactions" class="transactions" tal:define="payment_transactions view/get_transactions" tal:condition="payment_transactions">
+            <h3 class="nuw-subheader">Last 20 Transactions</h3>
+            <table id="transactions-table">
+                <tr>    
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Source</th>
+                    <th>Orderid (Shop Only)</th>
+                    <th>Payment Status</th>
+                </tr>
+                <tal:dup repeat="transaction payment_transactions">
+                <tr tal:attributes="id string:token-${transaction/token}">
+                    <td tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;"
+                        tal:content="python:toLocalizedTime(transaction.created, long_format = 1)"></td>
+                    <td tal:content="string:$$${transaction/amount}"></td>
+                    <td tal:content="transaction/component"></td>
+                    <td tal:content="transaction/orderid"></td>
+                    <td tal:content="transaction/status"></td>
+                </tr>
+                </tal:dup>
+            </table>
+        </div>
+    </metal:main>
+</metal:main>
+
+</body>
+</html>

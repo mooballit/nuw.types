@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xml:lang="en" lang="en"
+      i18n:domain="nuw.types"
+      tal:omit-tag="">
+      
+  <div class="address" tal:define="errors view/data/errors">
+    <tal:dup repeat="methods view/get_methods">
+      <div class="field clearfix" tal:define="token methods/token" tal:attributes="class python:'field clearfix'+(errors.has_key(token) and ' error' or '')">
+        <div tal:condition="python:errors.has_key(token)"
+             tal:content="python:errors[token] or None">
+            The Error
+        </div>
+        <div class="widget" style="margin: 0">
+          <input tal:condition="methods/default" type="radio" style="width: auto" name="token" tal:attributes="value methods/token" checked>
+          <input tal:condition="not: methods/default" type="radio" style="width: auto" name="token" tal:attributes="value methods/token">
+          <span tal:content="methods/details" >Details</span>
+        </div>
+      </div>
+    </tal:dup>
+    <div class="field clearfix">
+      <div class="widget" style="margin: 0">
+        <input type="radio" style="width: auto" name="token" value="null">
+        <span>Pay with a new credit card.</span>
+      </div>
+    </div>
+  </div>
+</html>

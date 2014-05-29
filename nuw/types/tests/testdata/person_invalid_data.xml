@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<message systemid="nuwdb" userid="dbo" action="insert" entity="person">
+  <data>
+    <!-- this should not validate against the @@schema.xsd -->
+    <person nuwassistid="61911" nuwdbid="NV593855" rownumber="20001" hubid="41942A20-ACE8-E011-90F7-005056A20027" type="Member" title="Mr" gender="Male" firstname="George" preferredname="George" lastname="Martin" homeaddress1="39 Chancellor Drive" homesuburb="MULGRAVE" homestate="VIC" homepostcode="3171" postaddress1="39 Chancellor Drive" postsuburb="MULGRAVE" poststate="VIC" postpcode="3170" postrts="0" home="03 9561 3831" work="" fax="" status="Paying" dob="1955-07-29T00:00:00" employeeid="085" employmenttype="permanent" />
+  </data>
+</message>

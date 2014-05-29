@@ -1,0 +1,51 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:cmf="http://namespaces.zope.org/cmf"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="nuw.types">
+
+  <cmf:registerDirectory
+    name="templates"
+    directory="skins"
+    recursive="True"
+    />
+
+  <adapter
+    provides="zope.container.interfaces.INameChooser"
+    for=".EmailUpdateTool.EmailUpdateTool"
+    factory="zope.container.contained.NameChooser"
+    />
+
+  <browser:page
+    name="emailupdate_view"
+    for="*"
+    class=".browser.EmailUpdateToolView"
+    allowed_interface=".interfaces.IEmailUpdateToolView"
+    permission="zope.Public"
+    />
+
+  <browser:page
+    name="emailupdate"
+    for="*"
+    class=".browser.EmailUpdate"
+    allowed_interface="zope.interface.Interface"
+    permission="zope.Public"
+    />
+
+  <browser:page
+    name="emailupdate_invalid"
+    for="*"
+    class=".browser.EmailUpdateInvalid"
+    allowed_interface="zope.interface.Interface"
+    permission="zope.Public"
+    />
+
+  <browser:page
+    name="emailupdate_finish"
+    for="*"
+    class=".browser.EmailUpdateSuccess"
+    allowed_interface="zope.interface.Interface"
+    permission="zope.Public"
+    />
+
+</configure>

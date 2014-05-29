@@ -1,0 +1,50 @@
+<tal:post tal:repeat="post view/get_posts" tal:define="view_private view/can_view_private">
+<div class="post"
+        tal:define="private post/private"
+        tal:condition="python: view_private and private or not private"
+        tal:attributes="id string:post-${post/id}; class python:private and 'post private' or 'post'"">
+    <div class="avatar-container">
+        <div tal:attributes="style string:background-image:url(${post/portrait/absolute_url})" tal:define="portheight post/portrait/height; portwidth post/portrait/width" tal:condition="python: portheight > portwidth" class="author-avatar img-high"></div>
+        <div tal:attributes="style string:background-image:url(${post/portrait/absolute_url})" tal:define="portheight post/portrait/height; portwidth post/portrait/width" tal:condition="python: portheight <= portwidth" class="author-avatar img-wide"></div>
+    </div>
+    <div class="post-body">
+        <a class="del-post" tal:condition="view/can_del_post" tal:attributes="href string:${request/ACTUAL_URL}?del-post=${post/id}">x</a>
+        <div>
+            <span class="author-name" tal:content="post/author"></span>
+            <span class="post-date" tal:content="post/posted">Mon 1 May 2012</span>
+            <span class="post-private" tal:condition="private" tal:content="string:Private" />
+        </div>
+        <div class="images" tal:condition="post/images" tal:attributes="style string:width: ${post/image_layout_width}px">
+            <a tal:repeat="img post/images" tal:attributes="href string:${context/portal_url}/image_store/${img/image_id}.jpeg" target="_blank">
+                <img tal:attributes="src string:${context/portal_url}/image_store/${img/image_id}_${img/width}.jpeg" />
+            </a>
+            <div class="visualClear"></div>
+        </div>
+        <p tal:content="structure post/body"></p>
+        <div class="sub-posts" tal:condition="python: post['subposts']">
+            <div class="post" tal:repeat="subpost post/subposts">
+                <div tal:attributes="style string:background-image:url(${subpost/portrait/absolute_url})" tal:define="portheight subpost/portrait/height; portwidth subpost/portrait/width" tal:condition="python: portheight > portwidth" class="author-avatar img-high"></div>
+                <div tal:attributes="style string:background-image:url(${subpost/portrait/absolute_url})" tal:define="portheight subpost/portrait/height; portwidth subpost/portrait/width" tal:condition="python: portheight <= portwidth" class="author-avatar img-wide"></div>
+                <div class="post-body">
+                    <a class="del-post" tal:condition="view/can_del_post" tal:attributes="href string:${request/ACTUAL_URL}?del-post=${subpost/id}">x</a>
+                    <div><span class="author-name" tal:content="subpost/author"></span> <span class="post-date" tal:content="subpost/posted">Mon 1 May 2012</span> <span class="post-private" tal:condition="private" tal:content="string:Private" /> </div>
+                    <p tal:content="structure subpost/body"></p>
+                </div>
+            </div>
+        </div>
+        <div class="subpost-form" tal:condition="view/can_reply">
+            <div class="form-show" tal:condition="view/can_reply">
+                <a href="#" class="btn">Add <span tal:condition="private" tal:content="string:Private " />Reply…</a>
+            </div>
+            <form method="post">
+                <input type="hidden" name="subpost-parent" tal:attributes="value post/id" />
+                <input type="hidden" name="private" value="on" tal:condition="private" />
+                <textarea name="subpost-body"placeholder="Reply To Post…"></textarea>
+                <button class='btn' type="submit">Reply<i class="arrow-icon right-white"></i></button>
+                <button class='btn' type="reset">Cancel</button>
+            </form>
+            <div class="visualClear"></div>
+        </div>
+    </div>
+</div>
+</tal:post>
